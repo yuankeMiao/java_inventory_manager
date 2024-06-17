@@ -34,5 +34,5 @@ build/
 src/main/resources/env.properties
 
 ### Designs ###
-endpoints/
+# endpoints/
 schema.png
