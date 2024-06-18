@@ -6,10 +6,10 @@ import java.util.UUID;
 
 public interface ISupplierRepo {
     public List<Supplier> getAllSuppliers();
-    public List<Supplier> getAllSuppliers(SupplierQuesryOptions quesryOptions);
+    public List<Supplier> getAllSuppliers(SupplierQueryOptions quesryOptions);
     public Optional<Supplier> getSupplierById(UUID supplierId);
     public Optional<Supplier> getSupplierByName(String name);
     public Supplier createSupplier(Supplier newSupplier);
     public void deleteSupplier(Supplier supplier);
-    public Supplier updateSupplier(Supplier updatedUser);
+    public Supplier updateSupplier(Supplier updatedSupplier);
 }

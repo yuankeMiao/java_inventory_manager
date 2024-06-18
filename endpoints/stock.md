@@ -20,7 +20,7 @@
 - `limit`: Number of items per page (default: 10)
 - `supplierId`: return stocks for a certain supplier
 - `productId`: return stocks for a certain product
-- `sortby`: quantity | restock_date | product_name (default: product_name)
+- `sortby`: quantity | product_name | created_time| updated_time (default: product_name)
 - `orderby`: order the result by `asc` or `desc` (default: asc)
 
 **Request example:**

@@ -19,7 +19,8 @@
 - `page`: Page number for pagination (default: 1)
 - `limit`: Number of items per page (default: 10)
 - `supplierId`: return orders for a certain supplier
-- `sortby`: created_date | updated_date (default: updated_date)
+- `status`: pending | shipping | received | cancelled | rejected
+- `sortby`: created_time | updated_time (default: updated_date)
 - `orderby`: order the result by `asc` or `desc` (default: asc)
 
 **Request example:**
@@ -94,7 +95,7 @@
 
 404 - Not found
 
-### GET /orders/{id}
+### GET /orders/
 
 **Request example:**
 
@@ -138,6 +139,7 @@
 ```
 
 ### POST /orders
+
 Only one supplier is allowed in one order, but multiple products from the same supplier can be added.
 There is no validation to check if a product is provided by a certain supplier, it is supposes to be done in another system like supplier interface.
 
@@ -171,7 +173,7 @@ body
 409 - Conflict (duplicated supplier name)
 400 - Bad request (invalid data - name is too short etc.)
 
-### PUT /orders/{id}
+### PUT /orders/
 
 **Request example:**
 

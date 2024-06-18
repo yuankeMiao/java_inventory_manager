@@ -12,5 +12,5 @@ public class BaseQueryOptions {
     public int limit;
 
     @Enumerated(EnumType.STRING)
-    public OrderByEnum orderBy;
+    public OrderByEnum orderBy = OrderByEnum.ASC;
 }

@@ -1,7 +1,6 @@
 package com.marmotshop.inventory_manager.domain.orderAggregate;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.marmotshop.inventory_manager.domain.common.BaseEntity;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
@@ -32,5 +31,5 @@ public class Order extends BaseEntity {
     private OrderStatusEnum status;
 
     @Transient
-    private Set<OrderItem> orderItems = new HashSet<>();
+    private List<OrderItem> orderItems;
 }
