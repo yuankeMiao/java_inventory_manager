@@ -2,13 +2,13 @@
 
 ## Table
 
-| Method | Endpoint        | Feature                                    |
-| ------ | --------------- | ------------------------------------------ |
+| Method | Endpoint        | Feature                                     |
+| ------ | --------------- | ------------------------------------------- |
 | GET    | /suppliers      | Return a list of suppliers with pagination |
-| GET    | /suppliers/{id} | Return one supplier by id                  |
-| POST   | /suppliers      | Create a new supplier record               |
-| PUT    | /suppliers/{id} | Update supplier info                       |
-| DELETE | /suppliers/{id} | Delete a supplier                          |
+| GET    | /suppliers/{id} | Return one supplier by id                   |
+| POST   | /suppliers      | Create a new supplier record                |
+| PUT    | /suppliers/{id} | Update supplier info                        |
+| DELETE | /suppliers/{id} | Delete a supplier                           |
 
 ## Details
 
@@ -20,7 +20,8 @@
 - `limit`: Number of items per page (default: 10)
 - `productId`: return suppliers for a certain product
 - `name`: search suppliers by name
-- `orderby`: order the result by `asc` or `desc` of suppliers name (default: asc)
+- `sortby`: name | created_time | updated_time (default: name)
+- `orderby`: order the result by `asc` or `desc` (default: asc)
 
 **Request example:**
 
@@ -31,6 +32,7 @@
 **Response:**
 
 200 - OK
+
 ```
 {
   data: [
@@ -56,7 +58,7 @@
 
 404 - Not found
 
-### GET /suppliers/{id}
+### GET /suppliers/
 
 **Request example:**
 
@@ -67,6 +69,7 @@
 **Response:**
 
 200 - OK
+
 ```
 {
     "id": "123e4567-e89b-12d3-a456-426614174000",
@@ -97,8 +100,7 @@ body
 409 - Conflict (duplicated supplier name)
 400 - Bad request (invalid data - name is too short etc.)
 
-
-### PUT /suppliers/{id}
+### PUT /suppliers/
 
 **Request example:**
 
@@ -113,9 +115,11 @@ body:
     "address": "123 Acme St, Springfield, IL, 62704"
 }
 ```
+
 **Response**
 
 200 - OK
+
 ```
 body:
 {
@@ -130,7 +134,6 @@ body:
 400 - Bad request (invalid data)
 404 - Not found (cannot find the supplier to update)
 409 - Conflict(duplicated supplier name)
-
 
 ### DELETE `/supplier/{id}`
 

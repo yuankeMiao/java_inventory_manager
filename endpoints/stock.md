@@ -43,7 +43,8 @@
                 "barcode": "1234567890123",
                 "product_name": "Widget A",
                 "quantity": 100,
-                "restock_date": "2024-06-17"
+                "created_date": "2024-06-10",
+		"updatedd_date": "2024-06-17"
             },
             {
                 "id": "b2c3d4e5-f678-90ab-12cd-34ef56gh7890",
@@ -52,7 +53,8 @@
                 "barcode": "2345678901234",
                 "product_name": "Gadget B",
                 "quantity": 200,
-                "restock_date": "2024-06-15"
+                "created_date": "2024-06-10",
+		"updatedd_date": "2024-06-17"
             },
             ...
 ]
@@ -83,7 +85,8 @@
     "barcode": "1234567890123",
     "product_name": "Widget A",
     "quantity": 100,
-    "restock_date": "2024-06-10"
+    "created_date": "2024-06-10",
+    "updatedd_date": "2024-06-17"
 }
 
 ```
@@ -132,13 +135,14 @@ body:
 ```
 body:
 {
-	"id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
+    "id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
     "product_id": "123e4567-e89b-12d3-a456-426614174002",
     "supplier_id": "7abcd123-4ef5-6789-gh12-34ijkl56mn90",
     "barcode": "3456789012345",
     "product_name": "Widget C",
     "quantity": 150,
-    "restock_date": "2024-06-17"
+    "created_date": "2024-06-10",
+	"updatedd_date": "2024-06-17"
 }
 ```
 
