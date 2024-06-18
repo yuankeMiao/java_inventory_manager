@@ -10,10 +10,9 @@
 | PUT    | /stocks/{id} | Update a stock record     |
 | DELETE | /stocks/{id} | Delete a stock record     |
 
-
 ## Details
 
-### GET /stocks
+### GET `/stocks`
 
 **Query parameters (optional):**
 
@@ -33,6 +32,7 @@
 **Response:**
 
 200 - OK
+
 ```
 {
   data: [
@@ -63,7 +63,7 @@
 
 404 - Not found
 
-### GET /stocks/{id}
+### GET `/stocks/{id}`
 
 **Request example:**
 
@@ -74,6 +74,7 @@
 **Response:**
 
 200 - OK
+
 ```
 {
     "id": "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78",
@@ -87,7 +88,7 @@
 
 ```
 
-### POST /stocks
+### POST `/stocks`
 
 **Request example:**
 
@@ -107,8 +108,7 @@ body
 409 - Conflict (duplicated supplier name)
 400 - Bad request (invalid data - name is too short etc.)
 
-
-### PUT /stocks/{id}
+### PUT `/stocks/{id}`
 
 **Request example:**
 
@@ -124,9 +124,11 @@ body:
     "quantity": 150,
 }
 ```
+
 **Response**
 
 200 - OK
+
 ```
 body:
 {
@@ -143,3 +145,16 @@ body:
 400 - Bad request (invalid data)
 404 - Not found (cannot find the supplier to update)
 409 - Conflict(duplicated supplier name)
+
+### DELETE `/stock/{id}`
+
+**Request example:**
+
+```
+/stocks/c3d4e5f6-7890-ab12-cd34-ef56gh789012
+```
+
+**Response**
+
+- 204 No Content (successful)
+- 404 Not Found (cannot find the item to delete)

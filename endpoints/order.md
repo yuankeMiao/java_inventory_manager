@@ -138,6 +138,8 @@
 ```
 
 ### POST /orders
+Only one supplier is allowed in one order, but multiple products from the same supplier can be added.
+There is no validation to check if a product is provided by a certain supplier, it is supposes to be done in another system like supplier interface.
 
 **Request example:**
 
@@ -219,3 +221,16 @@ body:
 400 - Bad request (invalid data)
 404 - Not found (cannot find the supplier to update)
 409 - Conflict(duplicated supplier name)
+
+### DELETE `/order/{id}`
+
+**Request example:**
+
+```
+/stocks/c3d4e5f6-7890-ab12-cd34-ef56gh789012
+```
+
+**Response**
+
+- 204 No Content (successful)
+- 404 Not Found (cannot find the item to delete)
