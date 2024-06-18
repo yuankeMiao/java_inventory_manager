@@ -5,19 +5,16 @@ import java.util.UUID;
 import com.marmotshop.inventory_manager.domain.common.BaseEntity;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "stocks")
 public class Stock extends BaseEntity {
 
     @ManyToOne

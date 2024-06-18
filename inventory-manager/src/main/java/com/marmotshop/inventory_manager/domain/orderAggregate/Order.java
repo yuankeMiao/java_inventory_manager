@@ -21,10 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "orders")
+@Table(name = "\"order\"")
 public class Order extends BaseEntity {
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private Supplier supplier;
 
     @Column(nullable = false)
