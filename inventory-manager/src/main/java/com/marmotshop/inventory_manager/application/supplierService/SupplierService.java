@@ -34,8 +34,8 @@ public class SupplierService implements ISupplierService {
     @Override
     public List<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
-                queryOptions.getOrderBy().equals(OrderByEnum.ASC) ? Sort.by(queryOptions.getSortBy().name()).ascending()
-                        : Sort.by(queryOptions.getSortBy().name()).descending());
+                queryOptions.getOrderBy().equals(OrderByEnum.ASC) ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
+                        : Sort.by(queryOptions.getSortBy().name().toLowerCase()).descending());
         Page<Supplier> suppliers = _supplierRepo.getAllSuppliers(pageable);
 
       // TODO: apply filters, consider using JpaSpecification (still researching)

@@ -35,9 +35,9 @@ public class SupplierController {
     private ResponseEntity<List<SupplierReadDto>> getAllSppliers(
             @RequestParam(required = false) UUID productId,
             @RequestParam(required = false) String name,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "name") SupplierSortByEnum sortBy,
+            @RequestParam(defaultValue = "NAME") SupplierSortByEnum sortBy,
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) {
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
         queryOptions.setProductId(productId);
@@ -47,6 +47,7 @@ public class SupplierController {
         queryOptions.setSortBy(sortBy);
         queryOptions.setOrderBy(orderBy);
 
+        // System.out.println(queryOptions.getPage());
         List<SupplierReadDto> suppliers = _supplierService.getAllSuppliers(queryOptions);
         return ResponseEntity.ok(suppliers);
     }
