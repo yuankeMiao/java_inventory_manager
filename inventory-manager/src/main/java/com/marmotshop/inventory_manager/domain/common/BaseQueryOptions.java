@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseQueryOptions {
-    public int page;
-    public int limit;
+    private int page;
+    private int limit;
 
     @Enumerated(EnumType.STRING)
-    public OrderByEnum orderBy = OrderByEnum.ASC;
+    private OrderByEnum orderBy = OrderByEnum.ASC;
 }

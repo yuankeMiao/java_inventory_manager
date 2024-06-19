@@ -4,8 +4,13 @@ import java.util.UUID;
 
 import com.marmotshop.inventory_manager.domain.common.BaseQueryOptions;
 
-public class SupplierQuesryOptions extends BaseQueryOptions {
-    public UUID priductId;
-    public String name;
-    public SupplierSortByEnum sortBy = SupplierSortByEnum.NAME;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class SupplierQueryOptions extends BaseQueryOptions {
+    private UUID priductId;
+    private String name;
+    private SupplierSortByEnum sortBy = SupplierSortByEnum.NAME;
 }

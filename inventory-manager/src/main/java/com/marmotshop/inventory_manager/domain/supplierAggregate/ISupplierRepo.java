@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface ISupplierRepo {
     public List<Supplier> getAllSuppliers();
-    public List<Supplier> getAllSuppliers(SupplierQueryOptions quesryOptions);
+    public Page<Supplier> getAllSuppliers(Pageable pageable);
     public Optional<Supplier> getSupplierById(UUID supplierId);
     public Optional<Supplier> getSupplierByName(String name);
     public Supplier createSupplier(Supplier newSupplier);
