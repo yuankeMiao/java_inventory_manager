@@ -9,8 +9,6 @@ import com.marmotshop.inventory_manager.application.supplierService.supplierDtos
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
 
 public interface ISupplierService {
-    List<SupplierReadDto> getAllSuppliers();
-
     List<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions);
 
     SupplierReadDto getSupplierById(UUID supplierId);
@@ -19,5 +17,5 @@ public interface ISupplierService {
 
     SupplierReadDto updateSupplierById(UUID supplierId, SupplierUpdateDto supplierUpdateDto);
 
-    void deleteSuppierById(UUID supplierId);
+    void deleteSupplierById(UUID supplierId);
 }

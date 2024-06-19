@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SupplierQueryOptions extends BaseQueryOptions {
-    private UUID priductId;
+    private UUID productId;
     private String name;
     private SupplierSortByEnum sortBy = SupplierSortByEnum.NAME;
 }

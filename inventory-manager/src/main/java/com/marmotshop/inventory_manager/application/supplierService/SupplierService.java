@@ -32,20 +32,13 @@ public class SupplierService implements ISupplierService {
     private SupplierMapper _supplierMapper;
 
     @Override
-    public List<SupplierReadDto> getAllSuppliers() {
-        List<Supplier> suppliers = _supplierRepo.getAllSuppliers();
-        List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
-                .collect(Collectors.toList());
-        return suppliersReadDto;
-    }
-
-    @Override
     public List<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
-        // TODO: apply pagination with filters, consider using JpaSpecification (still researching)
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC) ? Sort.by(queryOptions.getSortBy().name()).ascending()
                         : Sort.by(queryOptions.getSortBy().name()).descending());
         Page<Supplier> suppliers = _supplierRepo.getAllSuppliers(pageable);
+
+      // TODO: apply filters, consider using JpaSpecification (still researching)
 
         List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
                 .collect(Collectors.toList());
@@ -82,7 +75,7 @@ public class SupplierService implements ISupplierService {
     }
 
     @Override
-    public void deleteSuppierById(UUID supplierId) {
+    public void deleteSupplierById(UUID supplierId) {
         Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId).orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
         _supplierRepo.deleteSupplier(foundSupplier);
     }

@@ -7,10 +7,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import com.marmotshop.inventory_manager.domain.supplierAggregate.ISupplierRepo;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 
+@Repository
 public class SupplierRepo implements ISupplierRepo {
     @Autowired
     private ISupplierJpaRepo _supplierJpaRepo;
