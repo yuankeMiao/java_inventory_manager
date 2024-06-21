@@ -2,6 +2,7 @@ package com.marmotshop.inventory_manager.presentation.shared;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,40 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponseEntity> handleConstraintViolationExceptions(ConstraintViolationException ex) {
+        List<ErrorEntity> errors = ex.getConstraintViolations().stream()
+                .map(violation -> ErrorEntity.builder()
+                        .field(violation.getPropertyPath().toString())
+                        .message(violation.getMessage())
+                        .build())
+                .collect(Collectors.toList());
+
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
+                .errors(errors)
+                .build();
+
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponseEntity> handleDuplicatedExceptions(DataIntegrityViolationException ex) {
+
+        ErrorEntity errorEntity = ErrorEntity.builder()
+                .field("DataIntegrityViolation")
+                .message(ex.getMessage())
+                .build();
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
+                .errors(List.of(errorEntity))
+                .build();
+
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseEntity> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -43,10 +75,10 @@ public class GlobalExceptionHandler {
                 .field("resource")
                 .message(ex.getMessage())
                 .build();
-        ErrorResponseEntity errorResponse = ErrorResponseEntity.builder()
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
                 .errors(List.of(errorEntity))
                 .build();
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.NOT_FOUND);
     }
 
     // FIXME: just for trying now
@@ -64,9 +96,9 @@ public class GlobalExceptionHandler {
             errors.add(errorEntity);
         }
 
-        ErrorResponseEntity errorResponse = new ErrorResponseEntity();
-        errorResponse.setErrors(errors);
+        ErrorResponseEntity errorResponseEntity = new ErrorResponseEntity();
+        errorResponseEntity.setErrors(errors);
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
