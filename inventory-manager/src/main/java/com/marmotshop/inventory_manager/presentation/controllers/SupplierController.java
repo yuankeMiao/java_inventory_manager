@@ -1,7 +1,6 @@
 package com.marmotshop.inventory_manager.presentation.controllers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,19 @@ import com.marmotshop.inventory_manager.application.supplierService.supplierDtos
 import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierSortByEnum;
+import com.marmotshop.inventory_manager.infrastructure.services.email.EmailService;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
+
+import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("api/v1/suppliers")
 public class SupplierController {
     @Autowired
     private ISupplierService _supplierService;
+
+    @Autowired
+    private EmailService _emailService;
 
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<SupplierReadDto>> getAllSppliers(
@@ -40,8 +45,11 @@ public class SupplierController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "NAME") SupplierSortByEnum sortBy,
-            @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) {
-                
+            @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
+
+        // _emailService.sendEmail("yuankemiao.dev@gmail.com", "Test", "Greetings from marmot shop");
+        _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","Test", "Greetings from marmot shop");
+
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
         queryOptions.setProductId(productId);
         queryOptions.setName(name);
@@ -53,7 +61,8 @@ public class SupplierController {
         // System.out.println(queryOptions.getPage());
         ResponsePage<SupplierReadDto> suppliers = _supplierService.getAllSuppliers(queryOptions);
 
-        SuccessResponseEntity<SupplierReadDto> response = SuccessResponseEntity.<SupplierReadDto>builder().data(suppliers).build();
+        SuccessResponseEntity<SupplierReadDto> response = SuccessResponseEntity.<SupplierReadDto>builder()
+                .data(suppliers).build();
         return ResponseEntity.ok(response);
     }
 
