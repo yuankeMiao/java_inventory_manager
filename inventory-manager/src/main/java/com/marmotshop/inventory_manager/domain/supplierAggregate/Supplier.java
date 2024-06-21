@@ -1,14 +1,18 @@
 package com.marmotshop.inventory_manager.domain.supplierAggregate;
 
-import com.marmotshop.inventory_manager.domain.common.BaseEntity;
+import com.marmotshop.inventory_manager.domain.shared.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Supplier extends BaseEntity {
 

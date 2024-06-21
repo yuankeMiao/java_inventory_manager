@@ -2,8 +2,8 @@ package com.marmotshop.inventory_manager.domain.orderAggregate;
 
 import java.util.List;
 
-import com.marmotshop.inventory_manager.domain.common.BaseEntity;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
+import com.marmotshop.inventory_manager.domain.shared.BaseEntity;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 
 import jakarta.persistence.Column;

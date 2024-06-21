@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.domain.common.OrderByEnum;
+import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.ISupplierRepo;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
@@ -34,11 +34,13 @@ public class SupplierService implements ISupplierService {
     @Override
     public List<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
-                queryOptions.getOrderBy().equals(OrderByEnum.ASC) ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
+                queryOptions.getOrderBy().equals(OrderByEnum.ASC)
+                        ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
                         : Sort.by(queryOptions.getSortBy().name().toLowerCase()).descending());
         Page<Supplier> suppliers = _supplierRepo.getAllSuppliers(pageable);
 
-      // TODO: apply filters, consider using JpaSpecification (still researching)
+        // TODO: apply filters, consider using JpaSpecification (still researching) or
+        // RAW queries or add extra repo methods
 
         List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
                 .collect(Collectors.toList());
@@ -46,9 +48,10 @@ public class SupplierService implements ISupplierService {
     }
 
     @Override
-    public SupplierReadDto getSupplierById(UUID supplierId) {
-        //TODO: apply exception handling
-        Supplier foundSupplier =  _supplierRepo.getSupplierById(supplierId).get();
+    public SupplierReadDto getSupplierById(UUID supplierId) throws EntityNotFoundException {
+        Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId)
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
+
         SupplierReadDto supplierReadDto = _supplierMapper.entityToReadDto(foundSupplier);
         return supplierReadDto;
     }
@@ -56,18 +59,28 @@ public class SupplierService implements ISupplierService {
     @Override
     public SupplierReadDto createSupplier(SupplierCreateDto supplierCreateDto) {
         // check if supplier name is unique
-        if(_supplierRepo.getSupplierByName(supplierCreateDto.getName()).isPresent()) {
+        // if (_supplierRepo.getSupplierByName(supplierCreateDto.getName()).isPresent())
+        // {
+        // throw new DataIntegrityViolationException("Name: " +
+        // supplierCreateDto.getName());
+        // }
+
+        try {
+            Supplier newSupplier = _supplierMapper.createDtoToEntity(supplierCreateDto);
+            Supplier savedSupplier = _supplierRepo.createSupplier(newSupplier);
+            // savedSupplier.getId();
+            // _supplierMapper.entityToReadDto(savedSupplier).get
+            return _supplierMapper.entityToReadDto(savedSupplier);
+        } catch (DataIntegrityViolationException ex) {
             throw new DataIntegrityViolationException("Name: " + supplierCreateDto.getName());
         }
 
-        Supplier newSupplier = _supplierMapper.createDtoToEntity(supplierCreateDto);
-        Supplier savedSupplier = _supplierRepo.createSupplier(newSupplier);
-        return _supplierMapper.entityToReadDto(savedSupplier);
     }
 
     @Override
     public SupplierReadDto updateSupplierById(UUID supplierId, SupplierUpdateDto supplierUpdateDto) {
-        Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId).orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
+        Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId)
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
 
         _supplierMapper.updateEntityFromDto(supplierUpdateDto, foundSupplier);
         Supplier updatedSupplier = _supplierRepo.updateSupplier(foundSupplier);
@@ -76,7 +89,8 @@ public class SupplierService implements ISupplierService {
 
     @Override
     public void deleteSupplierById(UUID supplierId) {
-        Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId).orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
+        Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId)
+                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
         _supplierRepo.deleteSupplier(foundSupplier);
     }
 }

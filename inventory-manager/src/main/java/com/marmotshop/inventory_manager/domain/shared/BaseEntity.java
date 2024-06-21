@@ -1,4 +1,4 @@
-package com.marmotshop.inventory_manager.domain.common;
+package com.marmotshop.inventory_manager.domain.shared;
 
 
 import java.time.LocalDateTime;
@@ -29,15 +29,15 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
-    private UUID id;
+    protected UUID id;
 
     @DateTimeFormat
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdTime;
+    protected LocalDateTime createdTime;
 
     @DateTimeFormat
     @Column(nullable = false)
-    private LocalDateTime updatedTime;
+    protected LocalDateTime updatedTime;
 
     @PrePersist
     protected void onCreate() {

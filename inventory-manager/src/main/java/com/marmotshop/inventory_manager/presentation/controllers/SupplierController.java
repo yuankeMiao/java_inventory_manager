@@ -21,7 +21,7 @@ import com.marmotshop.inventory_manager.application.supplierService.ISupplierSer
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.domain.common.OrderByEnum;
+import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierSortByEnum;
 
