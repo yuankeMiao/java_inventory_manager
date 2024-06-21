@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 
 @Builder
 @Getter
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SuccessResponseEntity<T> {
-    public List<T> data;
+    public ResponsePage<T> data;
     
     @Builder.Default
     public final Object errors = null;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.supplierService.ISupplierService;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
@@ -24,6 +25,7 @@ import com.marmotshop.inventory_manager.application.supplierService.supplierDtos
 import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierSortByEnum;
+import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 
 @RestController
 @RequestMapping("api/v1/suppliers")
@@ -32,13 +34,14 @@ public class SupplierController {
     private ISupplierService _supplierService;
 
     @GetMapping
-    private ResponseEntity<List<SupplierReadDto>> getAllSppliers(
+    private ResponseEntity<SuccessResponseEntity<SupplierReadDto>> getAllSppliers(
             @RequestParam(required = false) UUID productId,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "NAME") SupplierSortByEnum sortBy,
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) {
+                
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
         queryOptions.setProductId(productId);
         queryOptions.setName(name);
@@ -48,8 +51,10 @@ public class SupplierController {
         queryOptions.setOrderBy(orderBy);
 
         // System.out.println(queryOptions.getPage());
-        List<SupplierReadDto> suppliers = _supplierService.getAllSuppliers(queryOptions);
-        return ResponseEntity.ok(suppliers);
+        ResponsePage<SupplierReadDto> suppliers = _supplierService.getAllSuppliers(queryOptions);
+
+        SuccessResponseEntity<SupplierReadDto> response = SuccessResponseEntity.<SupplierReadDto>builder().data(suppliers).build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{supplierId}")

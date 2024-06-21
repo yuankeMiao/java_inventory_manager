@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
@@ -42,7 +43,7 @@ public class SupplierService implements ISupplierService {
 
 
     @Override
-    public List<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
+    public ResponsePage<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC)
                         ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
@@ -54,7 +55,9 @@ public class SupplierService implements ISupplierService {
 
         List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
                 .collect(Collectors.toList());
-        return suppliersReadDto;
+
+        ResponsePage<SupplierReadDto> responsePage = new ResponsePage<>(suppliersReadDto.size(), queryOptions.getPage(), queryOptions.getLimit(), suppliersReadDto);
+        return responsePage;
     }
 
     @Override
