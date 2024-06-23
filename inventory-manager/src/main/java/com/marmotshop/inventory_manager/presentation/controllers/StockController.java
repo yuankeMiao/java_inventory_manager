@@ -26,7 +26,7 @@ import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntit
 import jakarta.mail.MessagingException;
 
 @RestController
-@RequestMapping("api/v1/orders")
+@RequestMapping("api/v1/stocks")
 public class StockController {
     @Autowired
     private IStockService _stockService;
