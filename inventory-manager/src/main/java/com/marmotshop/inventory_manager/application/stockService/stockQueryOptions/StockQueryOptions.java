@@ -12,9 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StockQueryOptions extends BaseQueryOptions {
-    public UUID supplierId;
-    public UUID productId;
+    private UUID supplierId;
+    private UUID productId;
 
     @Enumerated(EnumType.STRING)
-    public StockSortByEnum sortBy = StockSortByEnum.UPDATED_TIME;
+    private StockSortByEnum sortBy = StockSortByEnum.UPDATED_TIME;
 }

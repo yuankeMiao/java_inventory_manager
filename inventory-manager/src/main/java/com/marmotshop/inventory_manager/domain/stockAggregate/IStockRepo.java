@@ -11,8 +11,9 @@ public interface IStockRepo {
     public List<Stock> getAllStocks();
     public Page<Stock> getAllStocks(Pageable pageable);
     public Optional<Stock> getStockById(UUID stockId);
-    public List<Stock> getStocksByProductId(UUID productId);
-    public List<Stock> getStocksBySupplierId(UUID supplierId);
+    public Page<Stock> getStocksByProductId(UUID productId, Pageable pageable);
+    public Page<Stock> getStocksBySupplierId(UUID supplierId, Pageable pageable);
+    public Page<Stock> getStocksByProductIdAndSupplierId(UUID productId, UUID supplierId, Pageable pageable);
     public Stock createStock(Stock newStock);
     public void deleteStock(Stock Stock);
     public Stock updateStock(Stock updatedStock);

@@ -40,7 +40,6 @@ public class SupplierController {
 
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<SupplierReadDto>> getAllSppliers(
-            @RequestParam(required = false) UUID productId,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
@@ -51,7 +50,6 @@ public class SupplierController {
         _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","Test", "Greetings from marmot shop");
 
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
-        queryOptions.setProductId(productId);
         queryOptions.setPage(page);
         queryOptions.setLimit(limit);
         queryOptions.setSortBy(sortBy);

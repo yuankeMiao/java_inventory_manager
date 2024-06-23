@@ -40,10 +40,20 @@ public class StockService implements IStockService {
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC)
                         ? Sort.by(queryOptions.getSortBy().getFieldName()).ascending()
                         : Sort.by(queryOptions.getSortBy().getFieldName()).descending());
-        Page<Stock> stocks = _stockRepo.getAllStocks(pageable);
 
-        // TODO: apply filters, consider using JpaSpecification (still researching) or
-        // RAW queries or add extra repo methods
+        Page<Stock> stocks;
+        UUID supplierId = queryOptions.getSupplierId();
+        UUID productId = queryOptions.getProductId();
+        
+        if (supplierId != null && productId != null) {
+            stocks = _stockRepo.getStocksByProductIdAndSupplierId(productId, supplierId, pageable);
+        } else if (supplierId != null) {
+            stocks = _stockRepo.getStocksBySupplierId(supplierId, pageable);
+        } else if (productId != null) {
+            stocks = _stockRepo.getStocksByProductId(productId, pageable);
+        } else {
+            stocks = _stockRepo.getAllStocks(pageable);
+        }
 
         List<StockReadDto> stocksReadDto = stocks.stream().map(_stockMapper::entityToReadDto)
                 .collect(Collectors.toList());
@@ -66,20 +76,6 @@ public class StockService implements IStockService {
         Set<ConstraintViolation<StockCreateDto>> violations = _validator.validate(stockCreateDto);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException("Validation failed: ", violations);
-        }
-
-        // duplicate check - I think my current approach can be improved by HashSet, but i dont have time now
-        // get all stocks for the same product
-        List<Stock> stocksOfProduct = _stockRepo.getStocksByProductId(stockCreateDto.getProductId());
-        // check if supplier is already there
-        boolean isDuplicated = false;
-        for(Stock stock: stocksOfProduct){
-            if(stock.getSupplier().getId() == stockCreateDto.getSupplierId()){
-                isDuplicated = true;
-            }
-        }
-        if(isDuplicated) {
-            throw new DataIntegrityViolationException("Duplicated Stock with product: " + stockCreateDto.getProductId());
         }
 
         Stock newStock = _stockMapper.createDtoToEntity(stockCreateDto);

@@ -34,14 +34,20 @@ public class StockRepo implements IStockRepo {
     }
 
     @Override
-    public List<Stock> getStocksByProductId(UUID productId){
-        return _stockJpaRepo.findByProductId(productId);
+    public Page<Stock> getStocksByProductId(UUID productId, Pageable pageable){
+        return _stockJpaRepo.findByProductId(productId, pageable);
     }
 
     @Override
-    public List<Stock> getStocksBySupplierId(UUID supplierId){
-        return _stockJpaRepo.findBySupplierId(supplierId);
+    public Page<Stock> getStocksBySupplierId(UUID supplierId, Pageable pageable){
+        return _stockJpaRepo.findBySupplierId(supplierId, pageable);
     }
+
+    @Override
+    public Page<Stock> getStocksByProductIdAndSupplierId(UUID productId, UUID supplierId, Pageable pageable){
+        return _stockJpaRepo.findByProductIdAndSupplierId(productId, supplierId, pageable);
+    }
+
 
     @Override
     public Stock createStock(Stock newStock){
