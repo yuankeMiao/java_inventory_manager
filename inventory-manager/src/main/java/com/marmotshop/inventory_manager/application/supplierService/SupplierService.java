@@ -41,22 +41,26 @@ public class SupplierService implements ISupplierService {
     @Autowired
     private Validator _validator;
 
-
     @Override
     public ResponsePage<SupplierReadDto> getAllSuppliers(SupplierQueryOptions queryOptions) {
+
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC)
                         ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
                         : Sort.by(queryOptions.getSortBy().name().toLowerCase()).descending());
-        Page<Supplier> suppliers = _supplierRepo.getAllSuppliers(pageable);
 
-        // TODO: apply filters, consider using JpaSpecification (still researching) or
-        // RAW queries or add extra repo methods
-
+        Page<Supplier> suppliers;
+        if (queryOptions.getName() != null) {
+            suppliers = _supplierRepo.searchByName(queryOptions.getName(), pageable);
+        } else {
+            suppliers = _supplierRepo.getAllSuppliers(pageable);
+        }
+        
         List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
                 .collect(Collectors.toList());
 
-        ResponsePage<SupplierReadDto> responsePage = new ResponsePage<>(suppliersReadDto.size(), queryOptions.getPage(), queryOptions.getLimit(), suppliersReadDto);
+        ResponsePage<SupplierReadDto> responsePage = new ResponsePage<>(suppliersReadDto.size(), queryOptions.getPage(),
+                queryOptions.getLimit(), suppliersReadDto);
         return responsePage;
     }
 
@@ -89,7 +93,8 @@ public class SupplierService implements ISupplierService {
             Supplier savedSupplier = _supplierRepo.createSupplier(newSupplier);
             return _supplierMapper.entityToReadDto(savedSupplier);
         } catch (DataIntegrityViolationException ex) {
-            throw new DataIntegrityViolationException("Failed to save supplier with Name: " + supplierCreateDto.getName(), ex);
+            throw new DataIntegrityViolationException(
+                    "Failed to save supplier with Name: " + supplierCreateDto.getName(), ex);
         }
     }
 

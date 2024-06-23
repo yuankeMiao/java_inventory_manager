@@ -1,7 +1,5 @@
 package com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions;
 
-import java.util.UUID;
-
 import com.marmotshop.inventory_manager.application.shared.BaseQueryOptions;
 
 import jakarta.persistence.EnumType;
@@ -16,7 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SupplierQueryOptions extends BaseQueryOptions {
-    private UUID productId;
     private String name;
 
     @Enumerated(EnumType.STRING)

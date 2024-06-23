@@ -28,6 +28,12 @@ public class SupplierRepo implements ISupplierRepo {
         return _supplierJpaRepo.findAll(pageable);
     }
 
+    @Override
+    public Page<Supplier> searchByName(String name, Pageable pageable) {
+        return _supplierJpaRepo.findByNameContainingIgnoreCase(name, pageable);
+    }
+
+
     public Optional<Supplier> getSupplierById(UUID supplierId) {
         return _supplierJpaRepo.findById(supplierId);
     }

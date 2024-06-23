@@ -52,7 +52,6 @@ public class SupplierController {
 
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
         queryOptions.setProductId(productId);
-        queryOptions.setName(name);
         queryOptions.setPage(page);
         queryOptions.setLimit(limit);
         queryOptions.setSortBy(sortBy);
