@@ -19,7 +19,7 @@ import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierQueryOptions;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.ISupplierRepo;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 

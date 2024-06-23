@@ -22,8 +22,8 @@ import com.marmotshop.inventory_manager.application.supplierService.ISupplierSer
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierQueryOptions;
-import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierSortByEnum;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierQueryOptions;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierSortByEnum;
 import com.marmotshop.inventory_manager.infrastructure.services.email.EmailService;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 

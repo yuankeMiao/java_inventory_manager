@@ -1,4 +1,4 @@
-package com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption;
+package com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions;
 
 import java.util.UUID;
 
