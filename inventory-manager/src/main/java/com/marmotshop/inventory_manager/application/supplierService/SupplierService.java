@@ -46,8 +46,8 @@ public class SupplierService implements ISupplierService {
 
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC)
-                        ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
-                        : Sort.by(queryOptions.getSortBy().name().toLowerCase()).descending());
+                        ? Sort.by(queryOptions.getSortBy().getFieldName()).ascending()
+                        : Sort.by(queryOptions.getSortBy().getFieldName()).descending());
 
         Page<Supplier> suppliers;
         if (queryOptions.getName() != null) {

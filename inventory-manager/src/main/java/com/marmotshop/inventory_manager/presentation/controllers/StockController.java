@@ -31,14 +31,15 @@ public class StockController {
     @Autowired
     private IStockService _stockService;
 
-     @GetMapping
-    private ResponseEntity<SuccessResponseEntity<StockReadDto>> getAllSppliers(
+    // TODO: now all the enums are case sensitive, only capital letters, it's better to set them case insesitive
+    @GetMapping
+    private ResponseEntity<SuccessResponseEntity<StockReadDto>> getAllStocks(
             @RequestParam(required = false) UUID productId,
             @RequestParam(required = false) UUID supplierId,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "UPDATED_TIME") StockSortByEnum sortBy,
+            @RequestParam(defaultValue = "UPDATED_TIME") StockSortByEnum sortBy, 
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
 
         StockQueryOptions queryOptions = new StockQueryOptions();

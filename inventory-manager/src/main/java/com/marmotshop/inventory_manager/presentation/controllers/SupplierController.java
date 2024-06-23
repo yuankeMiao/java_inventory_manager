@@ -47,9 +47,10 @@ public class SupplierController {
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
 
         // _emailService.sendEmail("yuankemiao.dev@gmail.com", "Test", "Greetings from marmot shop");
-        _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","Test", "Greetings from marmot shop");
+        // _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","Test", "Greetings from marmot shop");
 
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
+        queryOptions.setName(name);
         queryOptions.setPage(page);
         queryOptions.setLimit(limit);
         queryOptions.setSortBy(sortBy);
