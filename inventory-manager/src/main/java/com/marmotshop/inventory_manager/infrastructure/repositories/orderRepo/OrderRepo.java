@@ -7,11 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import com.marmotshop.inventory_manager.domain.orderAggregate.IOrderRepo;
 import com.marmotshop.inventory_manager.domain.orderAggregate.Order;
 import com.marmotshop.inventory_manager.domain.orderAggregate.OrderStatusEnum;
 
+@Repository
 public class OrderRepo implements IOrderRepo {
     @Autowired
     private IOrderJpaRepo _orderJpaRepo;

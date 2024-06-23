@@ -7,15 +7,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.marmotshop.inventory_manager.application.orderService.orderItemDtos.*;
-import com.marmotshop.inventory_manager.application.stockService.StockMapper;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
 
-@Mapper(componentModel = "spring", uses = { StockMapper.class })
+@Mapper(componentModel = "spring")
 public interface OrderItemMapper {
     OrderItemMapper INSTANCE = Mappers.getMapper(OrderItemMapper.class);
 
     // entity to read dto
-    @Mapping(source = "stock", target = "stockReadDto")
     @Mapping(source = "order.id", target = "orderId")
     OrderItemReadDto entityToReadDto(OrderItem orderItem);
 
@@ -24,8 +22,7 @@ public interface OrderItemMapper {
 
     // create dto to entity
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "orderId", target = "order.id")
-    @Mapping(source = "stockId", target = "stock.id")
+    @Mapping(target = "order", ignore = true)
     OrderItem createDtoToEntity(OrderItemCreateDto orderItemCreateDto);
     
     // List mapping

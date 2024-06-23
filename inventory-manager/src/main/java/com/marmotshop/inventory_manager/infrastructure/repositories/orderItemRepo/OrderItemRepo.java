@@ -5,10 +5,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.IOrderItemRepo;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
 
+@Repository
 public class OrderItemRepo implements IOrderItemRepo {
 
     @Autowired

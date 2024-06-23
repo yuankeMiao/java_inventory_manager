@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,7 @@ import com.marmotshop.inventory_manager.domain.orderAggregate.*;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.IOrderItemRepo;
 import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
 
+@Service
 public class OrderService implements IOrderService {
     @Autowired
     private IOrderRepo _orderRepo;

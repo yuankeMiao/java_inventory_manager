@@ -59,7 +59,7 @@ public class StockController {
     }
 
     @GetMapping("/{stockId}")
-    private ResponseEntity<StockReadDto> getSupplerById(@PathVariable UUID stockId) {
+    private ResponseEntity<StockReadDto> getStockById(@PathVariable UUID stockId) {
         StockReadDto foundStock = _stockService.getStockById(stockId);
         return ResponseEntity.ok(foundStock);
     }

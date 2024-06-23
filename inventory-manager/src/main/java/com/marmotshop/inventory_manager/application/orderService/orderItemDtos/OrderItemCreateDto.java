@@ -11,13 +11,7 @@ import lombok.Setter;
 @Setter
 public class OrderItemCreateDto {
     @NotNull
-    private UUID id;
-
-    @NotNull
-    private UUID orderId;
-
-    @NotNull
-    private UUID stockId;
+    private UUID productId;
 
     @NotNull
     @Min(value = 0)
