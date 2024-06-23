@@ -20,13 +20,13 @@
 - `limit`: Number of items per page (default: 10)
 - `supplierId`: return orders for a certain supplier
 - `status`: pending | shipping | received | cancelled | rejected
-- `sortby`: created_date | updated_time (default: updated_date)
-- `orderby`: order the result by `asc` or `desc` (default: asc)
+- `sortby`:  CREATED_TIME | UPDATED_TIME (default: UPDATED_TIME) - case sensitive
+- `orderby`: order the result by `ASC` or `DESC` (default: ASC)
 
 **Request example:**
 
 ```
-/orders?page=2&limit=8&sortby=created_date&orderby=desc
+/orders?page=2&limit=8&sortby=CREATED_TIME&orderby=DESC
 ```
 
 **Response:**
