@@ -17,5 +17,4 @@ public interface IOrderRepo {
     public Order createOrder(Order newOrder);
     public void deleteOrder(Order Order);
     public Order updateOrder(Order updatedOrder);
-    public Page<Order> findByStatus(OrderStatusEnum status, org.springframework.data.domain.Pageable pageable);
 }
