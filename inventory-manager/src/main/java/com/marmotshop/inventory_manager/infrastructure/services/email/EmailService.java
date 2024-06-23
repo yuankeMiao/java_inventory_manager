@@ -27,8 +27,8 @@ public class EmailService {
         message.setRecipients(MimeMessage.RecipientType.TO, to);
         message.setSubject(subject);
 
-        String htmlContent =  String.format("<h1>This is a test Spring Boot email</h1>" +
-                "<p>It can contain <strong>%s</strong> content.</p>", body);
+        String htmlContent =  String.format("<h1>This is a email from Marmot Shop</h1>" +
+                "<p>%s</p>", body);
         message.setContent(htmlContent, "text/html; charset=utf-8");
 
         mailSender.send(message);
