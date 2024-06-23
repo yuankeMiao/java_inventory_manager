@@ -25,7 +25,7 @@
 **Request example:**
 
 ```
-/suppliers?page=2&limit=8&sortby=asc
+/suppliers?page=2&limit=8&sortby=ASC
 ```
 
 **Response:**
