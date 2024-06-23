@@ -38,8 +38,8 @@ public class StockService implements IStockService {
     public ResponsePage<StockReadDto> getAllStocks(StockQueryOptions queryOptions) {
         Pageable pageable = PageRequest.of(queryOptions.getPage() - 1, queryOptions.getLimit(),
                 queryOptions.getOrderBy().equals(OrderByEnum.ASC)
-                        ? Sort.by(queryOptions.getSortBy().name().toLowerCase()).ascending()
-                        : Sort.by(queryOptions.getSortBy().name().toLowerCase()).descending());
+                        ? Sort.by(queryOptions.getSortBy().getFieldName()).ascending()
+                        : Sort.by(queryOptions.getSortBy().getFieldName()).descending());
         Page<Stock> stocks = _stockRepo.getAllStocks(pageable);
 
         // TODO: apply filters, consider using JpaSpecification (still researching) or

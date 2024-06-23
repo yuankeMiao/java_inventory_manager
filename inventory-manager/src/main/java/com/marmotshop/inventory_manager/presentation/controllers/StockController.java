@@ -38,7 +38,7 @@ public class StockController {
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "UPDATED_DATE") StockSortByEnum sortBy,
+            @RequestParam(defaultValue = "UPDATED_TIME") StockSortByEnum sortBy,
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
 
         StockQueryOptions queryOptions = new StockQueryOptions();

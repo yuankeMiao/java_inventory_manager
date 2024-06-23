@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.marmotshop.inventory_manager.application.shared.BaseQueryOptions;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +14,7 @@ import lombok.Setter;
 public class StockQueryOptions extends BaseQueryOptions {
     public UUID supplierId;
     public UUID productId;
+
+    @Enumerated(EnumType.STRING)
     public StockSortByEnum sortBy = StockSortByEnum.UPDATED_TIME;
 }

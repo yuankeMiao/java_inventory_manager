@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -79,6 +80,18 @@ public class GlobalExceptionHandler {
                 .errors(List.of(errorEntity))
                 .build();
         return new ResponseEntity<>(errorResponseEntity, HttpStatus.NOT_FOUND);
+    }
+
+        @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponseEntity> handleTypeMismatchExceptions(MethodArgumentTypeMismatchException ex) {
+        ErrorEntity errorEntity = ErrorEntity.builder()
+                .field(ex.getName())
+                .message("Invalid value: " + ex.getValue())
+                .build();
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
+                .errors(List.of(errorEntity))
+                .build();
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
     }
 
     // FIXME: just for trying now
