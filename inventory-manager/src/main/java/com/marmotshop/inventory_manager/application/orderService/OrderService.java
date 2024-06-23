@@ -13,21 +13,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 
 import com.marmotshop.inventory_manager.application.orderService.orderDtos.*;
+import com.marmotshop.inventory_manager.application.orderService.orderItemDtos.OrderItemReadDto;
 import com.marmotshop.inventory_manager.application.orderService.orderQueryOptions.OrderQueryOptions;
 import com.marmotshop.inventory_manager.application.shared.*;
 import com.marmotshop.inventory_manager.domain.orderAggregate.*;
+import com.marmotshop.inventory_manager.domain.orderItemAggregate.IOrderItemRepo;
+import com.marmotshop.inventory_manager.domain.orderItemAggregate.OrderItem;
 
 public class OrderService implements IOrderService {
     @Autowired
     private IOrderRepo _orderRepo;
 
     @Autowired
+    private IOrderItemRepo _orderItemRepo;
+
+    @Autowired
     OrderMapper _orderMapper;
+
+    @Autowired
+    OrderItemMapper _orderItemMapper;
 
     @Autowired
     private Validator _validator;
@@ -53,9 +63,13 @@ public class OrderService implements IOrderService {
             orders = _orderRepo.getAllOrders(pageable);
         }
 
-        List<OrderReadDto> orderReadDtos = orders.stream()
-                .map(_orderMapper::entityToReadDto)
-                .collect(Collectors.toList());
+        List<OrderReadDto> orderReadDtos = orders.stream().map(order -> {
+            OrderReadDto orderReadDto = _orderMapper.entityToReadDto(order);
+            List<OrderItem> orderItems = _orderItemRepo.getOrderItemsByOrderId(order.getId());
+            List<OrderItemReadDto> orderItemReadDtos = _orderItemMapper.entityToReadDtoList(orderItems);
+            orderReadDto.setOrderItemsReadDtos(orderItemReadDtos);
+            return orderReadDto;
+        }).collect(Collectors.toList());
 
         return new ResponsePage<>(orders.getTotalElements(), queryOptions.getPage(), queryOptions.getLimit(),
                 orderReadDtos);
@@ -67,29 +81,53 @@ public class OrderService implements IOrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Order not found with id " + orderId));
 
         OrderReadDto orderReadDto = _orderMapper.entityToReadDto(foundOrder);
+        List<OrderItem> orderItems = _orderItemRepo.getOrderItemsByOrderId(orderId);
+        List<OrderItemReadDto> orderItemReadDtos = _orderItemMapper.entityToReadDtoList(orderItems);
+        orderReadDto.setOrderItemsReadDtos(orderItemReadDtos);
+
         return orderReadDto;
     }
 
     @Override
+    @Transactional
     public OrderReadDto createOrder(OrderCreateDto orderCreateDto) {
         Set<ConstraintViolation<OrderCreateDto>> violations = _validator.validate(orderCreateDto);
-              if (!violations.isEmpty()) {
+        if (!violations.isEmpty()) {
             throw new ConstraintViolationException("Validation failed: ", violations);
         }
 
         Order newOrder = _orderMapper.createDtoToEntity(orderCreateDto);
-        try{
+        try {
+            // create order 
             Order savedOrder = _orderRepo.createOrder(newOrder);
-            return _orderMapper.entityToReadDto(savedOrder);
+
+            // create orderItems
+            List<OrderItem> orderItems = orderCreateDto.getOrderItemsCreateDtos().stream()
+                    .map(itemDto -> {
+                        OrderItem orderItem = _orderItemMapper.createDtoToEntity(itemDto);
+                        orderItem.setOrder(savedOrder);
+                        return orderItem;
+                    }).collect(Collectors.toList());
+            _orderItemRepo.createAllOrderItems(orderItems);
+
+            // entity to read dto for order
+            OrderReadDto orderReadDto = _orderMapper.entityToReadDto(savedOrder);
+
+            // entity to read dto for orderItems, then set it
+            List<OrderItemReadDto> orderItemReadDtos = _orderItemMapper.entityToReadDtoList(orderItems);
+            orderReadDto.setOrderItemsReadDtos(orderItemReadDtos);
+
+            return orderReadDto;
         } catch (DataIntegrityViolationException ex) {
-            throw new DataIntegrityViolationException("Failed to save order with supplier: " + orderCreateDto.getSupplierId(), ex);
+            throw new DataIntegrityViolationException(
+                    "Failed to save order with supplier: " + orderCreateDto.getSupplierId(), ex);
         }
     }
 
     @Override
     public OrderReadDto updateOrderById(UUID orderId, OrderUpdateDto orderUpdateDto) {
         Order foundOrder = _orderRepo.getOrderById(orderId)
-        .orElseThrow(() -> new EntityNotFoundException("Order not found with id " + orderId));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found with id " + orderId));
 
         _orderMapper.updateEntityFromDto(orderUpdateDto, foundOrder);
         Order updatedOrder = _orderRepo.updateOrder(foundOrder);
@@ -100,7 +138,7 @@ public class OrderService implements IOrderService {
     @Override
     public void deleteOrderById(UUID orderId) {
         Order foundOrder = _orderRepo.getOrderById(orderId)
-        .orElseThrow(() -> new EntityNotFoundException("Order not found with id " + orderId));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found with id " + orderId));
 
         _orderRepo.deleteOrder(foundOrder);
     }

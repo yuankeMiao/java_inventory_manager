@@ -20,7 +20,7 @@ public interface OrderItemMapper {
     OrderItemReadDto entityToReadDto(OrderItem orderItem);
 
     // List mapping
-    List<OrderItemReadDto> EntityToReadDtoList(List<OrderItem> orderItems);
+    List<OrderItemReadDto> entityToReadDtoList(List<OrderItem> orderItems);
 
     // create dto to entity
     @Mapping(target = "id", ignore = true)
