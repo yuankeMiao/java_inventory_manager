@@ -6,13 +6,15 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import com.marmotshop.inventory_manager.application.stockService.stockDtos.*;
+import com.marmotshop.inventory_manager.application.supplierService.SupplierMapper;
 import com.marmotshop.inventory_manager.domain.stockAggregate.Stock;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {SupplierMapper.class})
 public interface StockMapper {
   StockMapper INSTANCE = Mappers.getMapper(StockMapper.class);
 
   // entity to read dto
+  @Mapping(source = "supplier", target = "supplierReadDto")
   StockReadDto entityToReadDto(Stock stock);
 
   // create dto to entity
