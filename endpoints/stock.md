@@ -26,7 +26,7 @@
 **Request example:**
 
 ```
-/stocks?page=2&limit=8&sortby=restock_date&orderby=desc
+/stocks?page=2&limit=8&sortby=UPDATED_DATE&orderby=DESC
 ```
 
 **Response:**
