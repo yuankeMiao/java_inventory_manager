@@ -11,5 +11,4 @@ public interface IOrderItemRepo {
     public Optional<OrderItem> getOrderItemById(UUID OrderItemId);
     public OrderItem createOrderItem(OrderItem newOrderItem);
     public void deleteOrderItem(OrderItem OrderItem);
-    public OrderItem updateOrderItem(OrderItem updatedOrderItem); // might remove, because modify an order item can be forbid
 }
