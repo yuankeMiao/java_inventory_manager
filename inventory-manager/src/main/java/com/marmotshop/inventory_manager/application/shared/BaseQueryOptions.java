@@ -1,4 +1,4 @@
-package com.marmotshop.inventory_manager.domain.shared;
+package com.marmotshop.inventory_manager.application.shared;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

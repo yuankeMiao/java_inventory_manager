@@ -5,9 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
-import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
-import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
+import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.*;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
 
 @Mapper(componentModel = "spring")

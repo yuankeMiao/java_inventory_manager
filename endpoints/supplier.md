@@ -20,8 +20,8 @@
 - `limit`: Number of items per page (default: 10)
 - `productId`: return suppliers for a certain product
 - `name`: search suppliers by name
-- `sortby`: name | created_time | updated_time (default: name)
-- `orderby`: order the result by `asc` or `desc` (default: asc)
+- `sortby`: sort the result by name | created_time | updated_time (feadult: name)
+- `orderby`: order the result by `asc` or `desc` of suppliers name (default: asc)
 
 **Request example:**
 

@@ -20,7 +20,7 @@
 - `limit`: Number of items per page (default: 10)
 - `supplierId`: return orders for a certain supplier
 - `status`: pending | shipping | received | cancelled | rejected
-- `sortby`: created_time | updated_time (default: updated_date)
+- `sortby`: created_date | updated_time (default: updated_date)
 - `orderby`: order the result by `asc` or `desc` (default: asc)
 
 **Request example:**

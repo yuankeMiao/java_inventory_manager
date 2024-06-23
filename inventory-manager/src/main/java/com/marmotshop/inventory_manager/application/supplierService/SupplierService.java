@@ -14,14 +14,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.marmotshop.inventory_manager.application.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.ISupplierRepo;
 import com.marmotshop.inventory_manager.domain.supplierAggregate.Supplier;
-import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
@@ -95,6 +95,11 @@ public class SupplierService implements ISupplierService {
 
     @Override
     public SupplierReadDto updateSupplierById(UUID supplierId, SupplierUpdateDto supplierUpdateDto) {
+        Set<ConstraintViolation<SupplierUpdateDto>> violations = _validator.validate(supplierUpdateDto);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException("Validation failed: ", violations);
+        }
+
         Supplier foundSupplier = _supplierRepo.getSupplierById(supplierId)
                 .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id " + supplierId));
 

@@ -6,7 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.marmotshop.inventory_manager.domain.orderAggregate.Order;
-import com.marmotshop.inventory_manager.domain.stockAggrefate.Stock;
+import com.marmotshop.inventory_manager.domain.stockAggregate.Stock;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

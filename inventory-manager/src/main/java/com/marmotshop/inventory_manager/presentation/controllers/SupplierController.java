@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.marmotshop.inventory_manager.application.shared.OrderByEnum;
 import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.supplierService.ISupplierService;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierCreateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierReadDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
-import com.marmotshop.inventory_manager.domain.shared.OrderByEnum;
-import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierQueryOptions;
-import com.marmotshop.inventory_manager.domain.supplierAggregate.SupplierSortByEnum;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierQueryOptions;
+import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption.SupplierSortByEnum;
 import com.marmotshop.inventory_manager.infrastructure.services.email.EmailService;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 

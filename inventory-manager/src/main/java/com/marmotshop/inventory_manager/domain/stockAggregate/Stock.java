@@ -1,4 +1,4 @@
-package com.marmotshop.inventory_manager.domain.stockAggrefate;
+package com.marmotshop.inventory_manager.domain.stockAggregate;
 
 import java.util.UUID;
 
@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,11 +23,9 @@ public class Stock extends BaseEntity {
     private Supplier supplier;
 
     @Column(nullable = false)
-    private UUID product_id;
-
-    @Column(columnDefinition = "VARCHAR(50)", nullable = false)
-    private String barcode;
+    private UUID productId;
 
     @Column(columnDefinition = "Numeric", nullable = false)
+    @Min(value = 0, message = "Quantity cannot be less than 0")
     private int quantity;
 }

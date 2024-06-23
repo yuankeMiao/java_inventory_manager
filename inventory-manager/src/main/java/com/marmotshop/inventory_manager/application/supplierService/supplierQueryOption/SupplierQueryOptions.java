@@ -1,8 +1,8 @@
-package com.marmotshop.inventory_manager.domain.supplierAggregate;
+package com.marmotshop.inventory_manager.application.supplierService.supplierQueryOption;
 
 import java.util.UUID;
 
-import com.marmotshop.inventory_manager.domain.shared.BaseQueryOptions;
+import com.marmotshop.inventory_manager.application.shared.BaseQueryOptions;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
