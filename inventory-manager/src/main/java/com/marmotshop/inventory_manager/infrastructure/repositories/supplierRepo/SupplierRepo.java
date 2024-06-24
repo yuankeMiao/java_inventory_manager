@@ -24,7 +24,6 @@ public class SupplierRepo implements ISupplierRepo {
 
     @Override
     public Page<Supplier> getAllSuppliers(Pageable pageable) {
-        // TODO: apply filter later
         return _supplierJpaRepo.findAll(pageable);
     }
 

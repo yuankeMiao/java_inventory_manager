@@ -24,7 +24,6 @@ import com.marmotshop.inventory_manager.application.supplierService.supplierDtos
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierSortByEnum;
-import com.marmotshop.inventory_manager.infrastructure.services.email.EmailService;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 
 import jakarta.mail.MessagingException;
@@ -35,9 +34,6 @@ public class SupplierController {
     @Autowired
     private ISupplierService _supplierService;
 
-    @Autowired
-    private EmailService _emailService;
-
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<SupplierReadDto>> getAllSppliers(
             @RequestParam(required = false) String name,
@@ -46,8 +42,6 @@ public class SupplierController {
             @RequestParam(defaultValue = "NAME") SupplierSortByEnum sortBy,
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
 
-        // _emailService.sendEmail("yuankemiao.dev@gmail.com", "Test", "Greetings from marmot shop");
-        // _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","Test", "Greetings from marmot shop");
 
         SupplierQueryOptions queryOptions = new SupplierQueryOptions();
         queryOptions.setName(name);
