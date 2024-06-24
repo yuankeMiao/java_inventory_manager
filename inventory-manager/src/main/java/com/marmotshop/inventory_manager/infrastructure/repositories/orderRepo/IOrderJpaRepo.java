@@ -34,4 +34,9 @@ public interface IOrderJpaRepo extends JpaRepository<Order, UUID> {
     List<Object[]> findTopTrendingProducts(@Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate, @Param("limitAmount") int limitAmount);
 
+    @Query("SELECT o FROM Order o WHERE o.status = :status AND o.updatedTime BETWEEN :startDate AND :endDate")
+    List<Order> findByStatusAndUpdatedTimeBetween(@Param("status") OrderStatusEnum status,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
+
 }
