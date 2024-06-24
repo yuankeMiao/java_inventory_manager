@@ -19,7 +19,7 @@ import com.marmotshop.inventory_manager.infrastructure.services.email.EmailServi
 import jakarta.mail.MessagingException;
 
 @Component
-public class DailyReport {
+public class MonthlyReport {
     @Autowired
     private EmailService _emailService;
     @Autowired
