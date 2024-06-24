@@ -24,6 +24,7 @@ import com.marmotshop.inventory_manager.application.supplierService.supplierDtos
 import com.marmotshop.inventory_manager.application.supplierService.supplierDtos.SupplierUpdateDto;
 import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierQueryOptions;
 import com.marmotshop.inventory_manager.application.supplierService.supplierQueryOptions.SupplierSortByEnum;
+import com.marmotshop.inventory_manager.infrastructure.services.logger.CsvLogger;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 
 import jakarta.mail.MessagingException;
@@ -33,6 +34,9 @@ import jakarta.mail.MessagingException;
 public class SupplierController {
     @Autowired
     private ISupplierService _supplierService;
+
+    @Autowired
+    private CsvLogger _logger;
 
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<SupplierReadDto>> getAllSppliers(
@@ -50,7 +54,6 @@ public class SupplierController {
         queryOptions.setSortBy(sortBy);
         queryOptions.setOrderBy(orderBy);
 
-        // System.out.println(queryOptions.getPage());
         ResponsePage<SupplierReadDto> suppliers = _supplierService.getAllSuppliers(queryOptions);
 
         SuccessResponseEntity<SupplierReadDto> response = SuccessResponseEntity.<SupplierReadDto>builder()
@@ -70,6 +73,7 @@ public class SupplierController {
         SupplierReadDto savedSupplier = _supplierService.createSupplier(SupplierCreateDto);
         URI locationOfNewSupplier = ucb.path("api/v1/suppliers/{supplierId}").buildAndExpand(savedSupplier.getId())
                 .toUri();
+                _logger.logSupplierAction("CREATE", savedSupplier.getId(), savedSupplier.getName());
         return ResponseEntity.created(locationOfNewSupplier).build();
     }
 
@@ -77,12 +81,14 @@ public class SupplierController {
     private ResponseEntity<SupplierReadDto> updateSupplier(@PathVariable UUID supplierId,
             @RequestBody SupplierUpdateDto supplierUpdateDto) {
         SupplierReadDto updatedSupplier = _supplierService.updateSupplierById(supplierId, supplierUpdateDto);
+        _logger.logSupplierAction("UPDATE", supplierId, supplierUpdateDto.getName());
         return ResponseEntity.ok(updatedSupplier);
     }
 
     @DeleteMapping("/{supplierId}")
     private ResponseEntity<Void> deleteSupplier(@PathVariable UUID supplierId) {
         _supplierService.deleteSupplierById(supplierId);
+        _logger.logSupplierAction("DELETE", supplierId, null);
         return ResponseEntity.noContent().build();
     }
 }

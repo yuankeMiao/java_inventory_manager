@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.marmotshop.inventory_manager.domain.stockAggregate.Stock;
 import com.marmotshop.inventory_manager.infrastructure.repositories.stockRepo.IStockJpaRepo;
@@ -12,7 +12,7 @@ import com.marmotshop.inventory_manager.infrastructure.services.email.EmailServi
 
 import jakarta.mail.MessagingException;
 
-@Service
+@Component
 public class LowStockNotification {
 
     @Autowired
@@ -22,9 +22,9 @@ public class LowStockNotification {
     private EmailService _emailService;
 
     // Every 30 minutes (1800000) I will check the stock, and if it's lower than 10. i will send the email
-    // @Scheduled(fixedRate = 1800000)
+    @Scheduled(fixedRate = 1800000)
     // for testing, i set it to 10s for now
-    @Scheduled(fixedRate = 10000)
+    // @Scheduled(fixedRate = 10000)
     public void checkStock() throws MessagingException {
         List<Stock> lowStocks = _stockJapkRepo.findByQuantityLessThan(10);
         if(!lowStocks.isEmpty()){

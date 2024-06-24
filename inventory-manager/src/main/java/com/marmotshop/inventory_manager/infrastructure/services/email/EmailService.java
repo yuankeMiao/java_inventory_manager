@@ -3,12 +3,13 @@ package com.marmotshop.inventory_manager.infrastructure.services.email;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.stereotype.Service;
+
+import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-@Service
+@Component
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;

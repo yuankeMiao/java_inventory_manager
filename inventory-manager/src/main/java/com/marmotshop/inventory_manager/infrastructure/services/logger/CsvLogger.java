@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CsvLogger {
     private static final String LOGS_DIR = "logs/";
     private static final String STOCK_LOG_FILE = LOGS_DIR + "stockLog.csv";
@@ -26,20 +29,20 @@ public class CsvLogger {
         }
     }
 
-    public void logSupplierAction(String action, String supplierId) {
+    public void logSupplierAction(String action, UUID supplierId, String supplierName) {
         try (FileWriter writer = new FileWriter(SUPPLIER_LOG_FILE, true)) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.append(timestamp).append(",").append(action).append(",").append(supplierId);
+            writer.append(timestamp).append(",").append(action).append(",").append(supplierId.toString()).append(",").append(supplierName);
             writer.append("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void logOrderAction(String action, String orderId, String status) {
+    public void logOrderAction(String action, UUID orderId, String status) {
         try (FileWriter writer = new FileWriter(ORDER_LOG_FILE, true)) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.append(timestamp).append(",").append(action).append(",").append(orderId).append(",").append(status);
+            writer.append(timestamp).append(",").append(action).append(",").append(orderId.toString()).append(",").append(status);
             writer.append("\n");
         } catch (IOException e) {
             e.printStackTrace();
