@@ -94,18 +94,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
     }
 
-    // FIXME: just for trying now
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponseEntity> handleAllExceptions(Exception ex) {
-
         List<ErrorEntity> errors = new ArrayList<>();
-        for (FieldError fieldError : ((BindException) ex).getBindingResult().getFieldErrors()) {
-            ErrorEntity errorEntity = new ErrorEntity();
-            errorEntity.setField(fieldError.getField());
-            errorEntity.setMessage(fieldError.getField() + " " +
-                    fieldError.getDefaultMessage());
 
+        if (ex instanceof BindException) {
+            for (FieldError fieldError : ((BindException) ex).getBindingResult().getFieldErrors()) {
+                ErrorEntity errorEntity = new ErrorEntity();
+                errorEntity.setField(fieldError.getField());
+                errorEntity.setMessage(fieldError.getField() + " " + fieldError.getDefaultMessage());
+                errors.add(errorEntity);
+            }
+        } else {
+            ErrorEntity errorEntity = new ErrorEntity();
+            errorEntity.setField("Exception");
+            errorEntity.setMessage(ex.getMessage());
             errors.add(errorEntity);
         }
 

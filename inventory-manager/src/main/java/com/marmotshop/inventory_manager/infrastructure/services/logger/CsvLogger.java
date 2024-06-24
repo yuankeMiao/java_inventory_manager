@@ -17,13 +17,14 @@ public class CsvLogger {
 
     // TODO: the methods can be simplified, maybe later if i have time
 
-    public void logStockAction(String action, UUID stockId, UUID productId, int quantity) {
+    // only update need to log quantity change, it's for the convenience of daily report
+    public void logStockAction(String action, UUID stockId, UUID productId, String quantityChange) {
         try (FileWriter writer = new FileWriter(STOCK_LOG_FILE, true)) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.append(timestamp).append(",").append(action).append(",")
-                  .append(stockId.toString()).append(",")
-                  .append(productId.toString()).append(",")
-                  .append(String.valueOf(quantity)).append("\n");
+                  .append(stockId != null ? stockId.toString() : "null").append(",")
+                  .append(productId != null ? productId.toString() : "null").append(",")
+                  .append(quantityChange != null ? String.valueOf(quantityChange) : "null").append("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,8 +33,9 @@ public class CsvLogger {
     public void logSupplierAction(String action, UUID supplierId, String supplierName) {
         try (FileWriter writer = new FileWriter(SUPPLIER_LOG_FILE, true)) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.append(timestamp).append(",").append(action).append(",").append(supplierId.toString()).append(",").append(supplierName);
-            writer.append("\n");
+            writer.append(timestamp).append(",").append(action).append(",")
+                  .append(supplierId != null ? supplierId.toString() : "null").append(",")
+                  .append(supplierName != null ? supplierName : "null").append("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

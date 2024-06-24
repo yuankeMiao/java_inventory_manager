@@ -21,6 +21,7 @@ import com.marmotshop.inventory_manager.application.shared.ResponsePage;
 import com.marmotshop.inventory_manager.application.stockService.IStockService;
 import com.marmotshop.inventory_manager.application.stockService.stockDtos.*;
 import com.marmotshop.inventory_manager.application.stockService.stockQueryOptions.*;
+import com.marmotshop.inventory_manager.infrastructure.services.logger.CsvLogger;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 
 import jakarta.mail.MessagingException;
@@ -31,7 +32,11 @@ public class StockController {
     @Autowired
     private IStockService _stockService;
 
-    // TODO: now all the enums are case sensitive, only capital letters, it's better to set them case insesitive
+    @Autowired
+    private CsvLogger _logger;
+
+    // TODO: now all the enums are case sensitive, only capital letters, it's better
+    // to set them case insesitive
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<StockReadDto>> getAllStocks(
             @RequestParam(required = false) UUID productId,
@@ -39,7 +44,7 @@ public class StockController {
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "UPDATED_TIME") StockSortByEnum sortBy, 
+            @RequestParam(defaultValue = "UPDATED_TIME") StockSortByEnum sortBy,
             @RequestParam(defaultValue = "ASC") OrderByEnum orderBy) throws MessagingException {
 
         StockQueryOptions queryOptions = new StockQueryOptions();
@@ -70,19 +75,27 @@ public class StockController {
         StockReadDto savedStock = _stockService.createStock(StockCreateDto);
         URI locationOfNewStock = ucb.path("api/v1/stocks/{stockId}").buildAndExpand(savedStock.getId())
                 .toUri();
+        _logger.logStockAction("CREATE", savedStock.getId(), savedStock.getProductId(),  String.valueOf(savedStock.getQuantity()));
         return ResponseEntity.created(locationOfNewStock).build();
     }
 
     @PutMapping("/{stockId}")
     private ResponseEntity<StockReadDto> updateStock(@PathVariable UUID stockId,
             @RequestBody StockUpdateDto stockUpdateDto) {
+            StockReadDto foundStock = _stockService.getStockById(stockId);
+
         StockReadDto updatedStock = _stockService.updateStockById(stockId, stockUpdateDto);
+        int oldQuantity = foundStock.getQuantity();
+        int newQuantity = stockUpdateDto.getQuantity();
+        int quantityChange = newQuantity - oldQuantity;
+        _logger.logStockAction("UPDATE", updatedStock.getId(), updatedStock.getProductId(),  String.valueOf(quantityChange));
         return ResponseEntity.ok(updatedStock);
     }
 
     @DeleteMapping("/{stockId}")
     private ResponseEntity<Void> deleteStock(@PathVariable UUID stockId) {
         _stockService.deleteStockById(stockId);
+        _logger.logStockAction("DELETE", stockId, null, null);
         return ResponseEntity.noContent().build();
     }
 }

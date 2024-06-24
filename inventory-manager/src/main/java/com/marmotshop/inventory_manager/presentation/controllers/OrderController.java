@@ -21,6 +21,7 @@ import com.marmotshop.inventory_manager.application.shared.*;
 import com.marmotshop.inventory_manager.application.orderService.orderDtos.*;
 import com.marmotshop.inventory_manager.domain.orderAggregate.OrderStatusEnum;
 import com.marmotshop.inventory_manager.infrastructure.services.email.EmailService;
+import com.marmotshop.inventory_manager.infrastructure.services.logger.CsvLogger;
 import com.marmotshop.inventory_manager.application.orderService.orderQueryOptions.*;
 import com.marmotshop.inventory_manager.presentation.shared.SuccessResponseEntity;
 
@@ -33,8 +34,11 @@ public class OrderController {
     @Autowired
     private IOrderService _orderService;
 
-     @Autowired
+    @Autowired
     private EmailService _emailService;
+
+    @Autowired
+    private CsvLogger _logger;
 
     @GetMapping
     private ResponseEntity<SuccessResponseEntity<OrderReadDto>> getAllOrders(
@@ -62,7 +66,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-
     @GetMapping("/{orderId}")
     private ResponseEntity<OrderReadDto> getOrderById(@PathVariable UUID orderId) {
         OrderReadDto foundOrder = _orderService.getOrderById(orderId);
@@ -75,6 +78,7 @@ public class OrderController {
         OrderReadDto savedOrder = _orderService.createOrder(OrderCreateDto);
         URI locationOfNewOrder = ucb.path("api/v1/orders/{orderId}").buildAndExpand(savedOrder.getId())
                 .toUri();
+        _logger.logOrderAction("CREATE", savedOrder.getId(), savedOrder.getStatus().toString());
         return ResponseEntity.created(locationOfNewOrder).build();
     }
 
@@ -82,14 +86,17 @@ public class OrderController {
     private ResponseEntity<OrderReadDto> updateOrder(@PathVariable UUID orderId,
             @RequestBody OrderUpdateDto orderUpdateDto) throws MessagingException {
         OrderReadDto updatedOrder = _orderService.updateOrderById(orderId, orderUpdateDto);
-        String emailBody = String.format("Your order with Id: %s updated to %s", orderId, orderUpdateDto.getStatus().toString());
-         _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com","An Order Updated", emailBody);
+        String emailBody = String.format("Your order with Id: %s updated to %s", orderId,
+                orderUpdateDto.getStatus().toString());
+        _emailService.sendHtmlEmail("yuankemiao.dev@gmail.com", "An Order Updated", emailBody);
+        _logger.logOrderAction("UPDATE", orderId, updatedOrder.getStatus().toString());
         return ResponseEntity.ok(updatedOrder);
     }
 
     @DeleteMapping("/{orderId}")
     private ResponseEntity<Void> deleteOrder(@PathVariable UUID orderId) {
         _orderService.deleteOrderById(orderId);
+        _logger.logOrderAction("DELETE", orderId, null);
         return ResponseEntity.noContent().build();
     }
 }
