@@ -56,7 +56,7 @@ public class SupplierService implements ISupplierService {
         List<SupplierReadDto> suppliersReadDto = suppliers.stream().map(_supplierMapper::entityToReadDto)
                 .collect(Collectors.toList());
 
-        ResponsePage<SupplierReadDto> responsePage = new ResponsePage<>(suppliersReadDto.size(), queryOptions.getPage(),
+        ResponsePage<SupplierReadDto> responsePage = new ResponsePage<>(suppliers.getTotalElements(), queryOptions.getPage(),
                 queryOptions.getLimit(), suppliersReadDto);
         return responsePage;
     }

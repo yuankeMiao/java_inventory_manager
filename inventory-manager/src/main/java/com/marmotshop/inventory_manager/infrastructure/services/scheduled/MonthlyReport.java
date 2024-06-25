@@ -90,8 +90,8 @@ public class MonthlyReport {
         report.append("</table>");
     }
 
-    @Scheduled(fixedRate = 10000) // for development
-    // @Scheduled(cron = "0 0 0 1 * ?")
+    // @Scheduled(fixedRate = 10000) // for development
+    @Scheduled(cron = "0 0 0 1 * ?")
     public void generateMonthlyReport() throws MessagingException {
 
         // header and css - i edited the template on a separate html file then copied it

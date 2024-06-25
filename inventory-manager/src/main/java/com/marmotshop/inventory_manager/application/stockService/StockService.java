@@ -58,7 +58,7 @@ public class StockService implements IStockService {
         List<StockReadDto> stocksReadDto = stocks.stream().map(_stockMapper::entityToReadDto)
                 .collect(Collectors.toList());
 
-        ResponsePage<StockReadDto> responsePage = new ResponsePage<>(stocksReadDto.size(), queryOptions.getPage(), queryOptions.getLimit(), stocksReadDto);
+        ResponsePage<StockReadDto> responsePage = new ResponsePage<>(stocks.getTotalElements(), queryOptions.getPage(), queryOptions.getLimit(), stocksReadDto);
         return responsePage;
     }
 
