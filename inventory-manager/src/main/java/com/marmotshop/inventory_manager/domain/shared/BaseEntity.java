@@ -41,9 +41,12 @@ public abstract class BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdTime = now;
-        this.updatedTime = now;
+        if (this.createdTime == null) {
+            this.createdTime = LocalDateTime.now();
+        }
+        if (this.updatedTime == null) {
+            this.updatedTime = LocalDateTime.now();
+        }
     }
 
     @PreUpdate

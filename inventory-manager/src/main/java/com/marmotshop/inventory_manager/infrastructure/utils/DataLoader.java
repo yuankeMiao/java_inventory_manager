@@ -101,8 +101,15 @@ public class DataLoader {
                     order.setSupplier(suppliers.get(faker.number().numberBetween(0, suppliers.size())));
                     order.setStatus(
                             OrderStatusEnum.values()[faker.number().numberBetween(0, OrderStatusEnum.values().length)]);
-                    order.setCreatedTime(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 30)));
-                    order.setUpdatedTime(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 30)));
+                    LocalDateTime createdTime = LocalDateTime.now().minusDays(faker.number().numberBetween(1, 365));
+                    // currentTime >= updatedTime >= createdTime
+                    int daysBetween = (int) (LocalDateTime.now().toLocalDate().toEpochDay()
+                            - createdTime.toLocalDate().toEpochDay());
+                    LocalDateTime updatedTime = createdTime.plusDays(faker.number().numberBetween(0, daysBetween + 1));
+
+                    order.setCreatedTime(createdTime);
+                    order.setUpdatedTime(updatedTime);
+
                     _orderJpaRepo.save(order);
 
                     List<OrderItem> orderItems = new ArrayList<>();

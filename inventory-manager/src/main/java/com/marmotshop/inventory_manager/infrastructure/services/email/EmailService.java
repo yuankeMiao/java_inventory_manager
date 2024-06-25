@@ -23,14 +23,12 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    // TODO: refine the html to make it looks better
     public void sendHtmlEmail(String to, String subject, String body) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         message.setRecipients(MimeMessage.RecipientType.TO, to);
         message.setSubject(subject);
 
-        String htmlContent =  String.format("<h1>This is a email from Marmot Shop</h1>" +
-                "<section>%s</section>", body);
+        String htmlContent = body;
         message.setContent(htmlContent, "text/html; charset=utf-8");
 
         mailSender.send(message);

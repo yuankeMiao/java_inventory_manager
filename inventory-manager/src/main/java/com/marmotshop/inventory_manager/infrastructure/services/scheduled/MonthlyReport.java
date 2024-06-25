@@ -1,5 +1,6 @@
 package com.marmotshop.inventory_manager.infrastructure.services.scheduled;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -28,10 +29,17 @@ public class MonthlyReport {
     @Autowired
     private IOrderItemJpaRepo _orderItemJpaRepo;
 
-    // not it generate report for last 30 days instead of a whole month, i might
-    // change it later if i have time - TODO
-    private LocalDateTime endDate = LocalDateTime.now();
-    private LocalDateTime startDate = endDate.minusDays(30);
+    LocalDate now = LocalDate.now();
+    // starts form the first day of last month
+    LocalDateTime startDate = now
+            .minusMonths(1)
+            .withDayOfMonth(1).atStartOfDay();
+
+    // ends at the last second of last month, because this report is supposed to be generated at the first minute of a new month
+    LocalDateTime endDate = now
+            .minusMonths(1)
+            .withDayOfMonth(now.minusMonths(1).lengthOfMonth())
+            .atTime(23, 59, 59);
 
     // 1. Trending - basically it's the hot products in new orders, since i did not
     // connect to main database of the store yet, and tracking the change of stock
@@ -52,7 +60,6 @@ public class MonthlyReport {
         return _orderJpaRepo.findByStatusAndUpdatedTimeBetween(status, startDate, endDate);
     }
 
-    
     private void appendOrderSection(StringBuilder report, OrderStatusEnum status, String statusLabel) {
         report.append("<h3>").append(statusLabel).append("</h3>");
         report.append("<table>");
@@ -83,11 +90,11 @@ public class MonthlyReport {
         report.append("</table>");
     }
 
-    // @Scheduled(fixedRate = 10000) // for development
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(fixedRate = 10000) // for development
+    // @Scheduled(cron = "0 0 0 1 * ?")
     public void generateMonthlyReport() throws MessagingException {
 
-        // header and css - i edited the template on a separate html file then copied it here
+        // header and css - i edited the template on a separate html file then copied it
         StringBuilder report = new StringBuilder("""
                 <html>
 
@@ -117,9 +124,9 @@ public class MonthlyReport {
                 </head>
 
                 <body>
-                    <h1>Monthly Report of Inventory Management</h1>
                     """);
 
+        report.append("<h1>Monthly Report of Inventory Management - ").append(startDate.getMonth()).append("</h1>");
         // Part 1
         report.append("""
                 <h2>1. Trending products</h2>
@@ -150,7 +157,6 @@ public class MonthlyReport {
         appendOrderSection(report, OrderStatusEnum.RECEIVED, "Received");
         appendOrderSection(report, OrderStatusEnum.CANCELLED, "Cancelled");
         appendOrderSection(report, OrderStatusEnum.REJECTED, "Rejected");
-
 
         // final
         report.append("</body>\n" + //
