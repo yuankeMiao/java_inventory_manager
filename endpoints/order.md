@@ -26,7 +26,8 @@
 **Request example:**
 
 ```
-/orders?page=2&limit=8&sortby=CREATED_TIME&orderby=DESC
+GET /api/v1/orders?sortBy=CREATED_TIME&orderBy=DESC&status=PENDING
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -34,62 +35,161 @@
 200 - OK
 
 ```
-{
-  data: [
-            {
-                "id": "e5f67890-ab12-cd34-ef56-gh7890123456",
-                "supplier_id": "9abcd123-4ef5-6789-gh12-34ijkl56mn78",
-                "status": "Pending",
-                "created_date": "2024-06-17",
-                "updated_date": "2024-06-17",
-                "orderItems":[
-                                {
-                                  "id": "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78",
-                                  "order_id": "e5f67890-ab12-cd34-ef56-gh7890123456",
-                                  "product_id": "123e4567-e89b-12d3-a456-426614174000",
-                                  "product_name": "Widget A",
-                                  "quantity": 10,
-                                  "price": 19.99
-                                },
-                                {
-                                  "id": "b2c3d4e5-f678-90ab-12cd-34ef56gh7890",
-                                  "order_id": "e5f67890-ab12-cd34-ef56-gh7890123456",
-                                  "product_id": "123e4567-e89b-12d3-a456-426614174001",
-                                  "product_name": "Gadget B",
-                                  "quantity": 5,
-                                  "price": 29.99
-                                }
-                            ]
-            },
-            {
-                "id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                "supplier_id": "8abcd123-4ef5-6789-gh12-34ijkl56mn89",
-                "status": "Shipped",
-                "created_date": "2024-06-15",
-                "updated_date": "2024-06-16",
-                "orderItems": [
-                                {
-                                  "id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
-                                  "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                                  "product_id": "123e4567-e89b-12d3-a456-426614174002",
-                                  "product_name": "Widget C",
-                                  "quantity": 20,
-                                  "price": 15.99
-                                },
-                                {
-                                  "id": "d4e5f678-90ab-12cd-34ef-56gh78901234",
-                                  "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                                  "product_id": "123e4567-e89b-12d3-a456-426614174003",
-                                  "product_name": "Gadget D",
-                                  "quantity": 8,
-                                  "price": 24.99
-                                }
-                            ]
-            },
-            ...
-]
 
-  total: 288
+{
+  "data": {
+    "totalRecords": 4,
+    "page": 1,
+    "limit": 10,
+    "records": [
+      {
+        "id": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+        "createdTime": "2024-06-19T10:56:38.108901",
+        "updatedTime": "2024-06-23T10:56:38.108901",
+        "supplierReadDto": {
+          "id": "58a1f5ac-85a1-43b5-b0a4-a4158ad57680",
+          "createdTime": "2024-06-25T10:56:37.807888",
+          "updatedTime": "2024-06-25T10:56:37.80789",
+          "name": "Hegmann Inc",
+          "contactPerson": "Lucien Conn",
+          "contactEmail": "kallie.mcclure@yahoo.com",
+          "address": "Suite 571 6628 Fay Run, Port Cariville, NM 76182-0683"
+        },
+        "status": "PENDING",
+        "orderItemsReadDtos": [
+          {
+            "id": "6ada0c51-03f0-4663-9624-5fee4b8ea844",
+            "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+            "productId": "38226278-a2b6-4598-8fce-f8d405646250",
+            "quantity": 6,
+            "price": 53.77
+          },
+          {
+            "id": "d9a1a3c1-14dc-4c17-9115-62961cfb79dd",
+            "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+            "productId": "b9ab1f08-6cb1-49c2-b78b-303d997ee7e0",
+            "quantity": 6,
+            "price": 48.46
+          },
+          {
+            "id": "8c0e1fb1-5407-4070-b5fd-b32c0144716c",
+            "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+            "productId": "631c2c7e-3899-4ad3-b46e-47d718338575",
+            "quantity": 4,
+            "price": 14.13
+          }
+        ]
+      },
+      {
+        "id": "b1035451-7d57-40a8-9b46-480287ac7877",
+        "createdTime": "2024-03-12T10:56:38.093574",
+        "updatedTime": "2024-03-19T10:56:38.093574",
+        "supplierReadDto": {
+          "id": "77e33663-2ac3-4aa9-baf4-35baf400f606",
+          "createdTime": "2024-06-25T10:56:37.802478",
+          "updatedTime": "2024-06-25T10:56:37.802497",
+          "name": "Kassulke Group",
+          "contactPerson": "Mrs. Eldridge Grimes",
+          "contactEmail": "percy.grady@yahoo.com",
+          "address": "0417 Ritchie Drive, Port Penney, SD 83788"
+        },
+        "status": "PENDING",
+        "orderItemsReadDtos": [
+          {
+            "id": "6e63335c-1f6f-4220-9bc5-e89d50418ec3",
+            "orderId": "b1035451-7d57-40a8-9b46-480287ac7877",
+            "productId": "cf5681d8-f7d1-4859-a70f-cf4fe09a5207",
+            "quantity": 9,
+            "price": 42.78
+          }
+        ]
+      },
+      {
+        "id": "aa5f0221-00ec-4f65-be88-bdded6453947",
+        "createdTime": "2023-09-12T10:56:38.149015",
+        "updatedTime": "2024-02-25T10:56:38.149015",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "status": "PENDING",
+        "orderItemsReadDtos": [
+          {
+            "id": "aa7ac0ae-16ae-4c1d-afe3-6c392771734c",
+            "orderId": "aa5f0221-00ec-4f65-be88-bdded6453947",
+            "productId": "d3af1b4b-730e-40a9-b70a-27c10177c897",
+            "quantity": 2,
+            "price": 35.07
+          },
+          {
+            "id": "6f1fc393-6c5b-404c-92fb-80fc90766120",
+            "orderId": "aa5f0221-00ec-4f65-be88-bdded6453947",
+            "productId": "45964aa3-a094-46c4-8958-b1fa931dd5c5",
+            "quantity": 2,
+            "price": 86.81
+          },
+          {
+            "id": "f0d81563-f212-4668-b363-ba1b877a4d86",
+            "orderId": "aa5f0221-00ec-4f65-be88-bdded6453947",
+            "productId": "a51968c6-9b5e-4921-bfc4-c40f6f8d3d77",
+            "quantity": 8,
+            "price": 29.05
+          }
+        ]
+      },
+      {
+        "id": "4aa9a376-de1f-44af-8198-6075c7d79b3f",
+        "createdTime": "2023-08-05T10:56:38.121361",
+        "updatedTime": "2024-03-31T10:56:38.121361",
+        "supplierReadDto": {
+          "id": "9996488f-9963-4ffb-9b3b-6d234201e74d",
+          "createdTime": "2024-06-25T10:56:37.808644",
+          "updatedTime": "2024-06-25T10:56:37.808655",
+          "name": "Cormier, Dibbert and Wisozk",
+          "contactPerson": "Winston Bergstrom",
+          "contactEmail": "tony.kling@yahoo.com",
+          "address": "Apt. 191 3681 Gregory Club, East Deloresshire, NC 88415-7395"
+        },
+        "status": "PENDING",
+        "orderItemsReadDtos": [
+          {
+            "id": "f45f7a20-b074-4d9c-a724-0ea8d49da5d2",
+            "orderId": "4aa9a376-de1f-44af-8198-6075c7d79b3f",
+            "productId": "4a9760b6-bfaa-45cd-a8b7-aa88f0c697fc",
+            "quantity": 7,
+            "price": 74.54
+          },
+          {
+            "id": "ee2a87e3-dead-40d9-9c91-99f6bf1b8ac9",
+            "orderId": "4aa9a376-de1f-44af-8198-6075c7d79b3f",
+            "productId": "9dbc5460-e90e-4c79-a977-2d77a90f6695",
+            "quantity": 9,
+            "price": 83.53
+          },
+          {
+            "id": "abd7b0be-6eaa-4b64-affb-f87d0b63d4ac",
+            "orderId": "4aa9a376-de1f-44af-8198-6075c7d79b3f",
+            "productId": "4101e704-8bea-4487-8028-31237afbce6f",
+            "quantity": 2,
+            "price": 55.41
+          },
+          {
+            "id": "59d3063e-bcd9-425b-831d-cf5a81c9cfed",
+            "orderId": "4aa9a376-de1f-44af-8198-6075c7d79b3f",
+            "productId": "eeac63b2-4e39-46f1-8c3b-c5c4021b3498",
+            "quantity": 2,
+            "price": 37.92
+          }
+        ]
+      }
+    ]
+  },
+  "errors": null
 }
 ```
 
@@ -100,7 +200,8 @@
 **Request example:**
 
 ```
-/orders/f67890ab-12cd-34ef-56gh-7890123456ij
+GET /api/v1/orders/c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -109,32 +210,43 @@
 
 ```
 {
-    "id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-    "supplier_id": "8abcd123-4ef5-6789-gh12-34ijkl56mn89",
-    "status": "Pending",
-    "created_date": "2024-06-15",
-    "updated_date": "2024-06-16",
-    "orderItems": [
-                    {
-                      "id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
-                      "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                      "product_id": "123e4567-e89b-12d3-a456-426614174002",
-                      "barcode": "3456789012345",
-                      "product_name": "Widget C",
-                      "quantity": 20,
-                      "price": 15.99
-                    },
-                    {
-                      "id": "d4e5f678-90ab-12cd-34ef-56gh78901234",
-                      "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                      "product_id": "123e4567-e89b-12d3-a456-426614174003",
-                      "barcode" : "4567890123456",
-                      "product_name": "Gadget D",
-                      "quantity": 8,
-                      "price": 24.99
-                    }
-                ]
-},
+  "id": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+  "createdTime": "2024-06-19T10:56:38.108901",
+  "updatedTime": "2024-06-23T10:56:38.108901",
+  "supplierReadDto": {
+    "id": "58a1f5ac-85a1-43b5-b0a4-a4158ad57680",
+    "createdTime": "2024-06-25T10:56:37.807888",
+    "updatedTime": "2024-06-25T10:56:37.80789",
+    "name": "Hegmann Inc",
+    "contactPerson": "Lucien Conn",
+    "contactEmail": "kallie.mcclure@yahoo.com",
+    "address": "Suite 571 6628 Fay Run, Port Cariville, NM 76182-0683"
+  },
+  "status": "PENDING",
+  "orderItemsReadDtos": [
+    {
+      "id": "6ada0c51-03f0-4663-9624-5fee4b8ea844",
+      "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+      "productId": "38226278-a2b6-4598-8fce-f8d405646250",
+      "quantity": 6,
+      "price": 53.77
+    },
+    {
+      "id": "d9a1a3c1-14dc-4c17-9115-62961cfb79dd",
+      "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+      "productId": "b9ab1f08-6cb1-49c2-b78b-303d997ee7e0",
+      "quantity": 6,
+      "price": 48.46
+    },
+    {
+      "id": "8c0e1fb1-5407-4070-b5fd-b32c0144716c",
+      "orderId": "c6fc081f-2fc7-4d5d-841c-ce0a880ccc7f",
+      "productId": "631c2c7e-3899-4ad3-b46e-47d718338575",
+      "quantity": 4,
+      "price": 14.13
+    }
+  ]
+}
 
 ```
 
@@ -146,26 +258,28 @@ There is no validation to check if a product is provided by a certain supplier, 
 **Request example:**
 
 ```
+
+POST /api/v1/orders
+Content-Type: application/json
+API_KEY: marmotte
+
 body
 {
-    "supplier_id": "8abcd123-4ef5-6789-gh12-34ijkl56mn89",
-    "orderItems": [
-                    {
-                      "product_id": "123e4567-e89b-12d3-a456-426614174002",
-                      "barcode": "3456789012345",
-                      "product_name": "Widget C",
-                      "quantity": 20,
-                      "price": 15.99
-                    },
-                    {
-                      "product_id": "123e4567-e89b-12d3-a456-426614174003",
-                      "barcode" : "4567890123456",
-                      "product_name": "Gadget D",
-                      "quantity": 8,
-                      "price": 24.99
-                    }
-                ]
-},
+    "supplierId": "58a1f5ac-85a1-43b5-b0a4-a4158ad57680",
+    "status": "PENDING",
+    "orderItemsCreateDtos" : [
+        {
+        "productId": "000a8bd2-6c9c-4491-8304-8a768865c003",
+        "quantity": 10,
+        "price": 35.99
+        },
+        {
+        "productId": "000a8bd2-6c9c-4491-8304-8a768865c000",
+        "quantity": 20,
+        "price": 15.99
+        }
+    ]
+}
 ```
 
 **Response**
@@ -178,11 +292,13 @@ body
 **Request example:**
 
 ```
-/orders/c3d4e5f6-7890-ab12-cd34-ef56gh789012
 
-body:
+PUT /api/v1/orders/2f50d5a1-c116-4b6a-a4b4-5bf2c38f502a
+Content-Type: application/json
+API_KEY: marmotte
+
 {
-    "status": "shipped"
+    "status": "CANCELLED"
 }
 ```
 
@@ -192,32 +308,21 @@ body:
 
 ```
 {
-    "id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-    "supplier_id": "8abcd123-4ef5-6789-gh12-34ijkl56mn89",
-    "status": "Shipped",
-    "created_date": "2024-06-15",
-    "updated_date": "2024-06-16",
-    "orderItems": [
-                    {
-                      "id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
-                      "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                      "product_id": "123e4567-e89b-12d3-a456-426614174002",
-                      "barcode": "3456789012345",
-                      "product_name": "Widget C",
-                      "quantity": 20,
-                      "price": 15.99
-                    },
-                    {
-                      "id": "d4e5f678-90ab-12cd-34ef-56gh78901234",
-                      "order_id": "f67890ab-12cd-34ef-56gh-7890123456ij",
-                      "product_id": "123e4567-e89b-12d3-a456-426614174003",
-                      "barcode" : "4567890123456",
-                      "product_name": "Gadget D",
-                      "quantity": 8,
-                      "price": 24.99
-                    }
-                ]
-},
+  "id": "2f50d5a1-c116-4b6a-a4b4-5bf2c38f502a",
+  "createdTime": "2024-06-25T11:53:10.431791",
+  "updatedTime": "2024-06-25T11:54:32.627437",
+  "supplierReadDto": {
+    "id": "58a1f5ac-85a1-43b5-b0a4-a4158ad57680",
+    "createdTime": "2024-06-25T10:56:37.807888",
+    "updatedTime": "2024-06-25T10:56:37.80789",
+    "name": "Hegmann Inc",
+    "contactPerson": "Lucien Conn",
+    "contactEmail": "kallie.mcclure@yahoo.com",
+    "address": "Suite 571 6628 Fay Run, Port Cariville, NM 76182-0683"
+  },
+  "status": "CANCELLED",
+  "orderItemsReadDtos": null
+}
 ```
 
 400 - Bad request (invalid data)
