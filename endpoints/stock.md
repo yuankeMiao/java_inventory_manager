@@ -26,7 +26,8 @@
 **Request example:**
 
 ```
-/stocks?page=2&limit=8&sortby=UPDATED_DATE&orderby=DESC
+GET /api/v1/stocks?orderBy=ASC&sortBy=QUANTITY&supplierId=1cb3c1b6-93c7-4364-baec-f321d53cf708
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -34,32 +35,96 @@
 200 - OK
 
 ```
-{
-  data: [
-            {
-                "id": "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78",
-                "product_id": "123e4567-e89b-12d3-a456-426614174000",
-                "supplier_id": "9abcd123-4ef5-6789-gh12-34ijkl56mn78",
-                "barcode": "1234567890123",
-                "product_name": "Widget A",
-                "quantity": 100,
-                "created_date": "2024-06-10",
-		"updatedd_date": "2024-06-17"
-            },
-            {
-                "id": "b2c3d4e5-f678-90ab-12cd-34ef56gh7890",
-                "product_id": "123e4567-e89b-12d3-a456-426614174001",
-                "supplier_id": "8abcd123-4ef5-6789-gh12-34ijkl56mn89",
-                "barcode": "2345678901234",
-                "product_name": "Gadget B",
-                "quantity": 200,
-                "created_date": "2024-06-10",
-		"updatedd_date": "2024-06-17"
-            },
-            ...
-]
 
-  total: 188
+{
+  "data": {
+    "totalRecords": 15,
+    "page": 1,
+    "limit": 5,
+    "records": [
+      {
+        "id": "0523e1f4-899a-4a3b-9327-01dade4f144b",
+        "createdTime": "2024-06-25T10:56:37.972561",
+        "updatedTime": "2024-06-25T10:56:37.972568",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "productId": "d3af1b4b-730e-40a9-b70a-27c10177c897",
+        "quantity": 1
+      },
+      {
+        "id": "59d00edf-29d7-450f-80b9-33c42196a74c",
+        "createdTime": "2024-06-25T10:56:37.978211",
+        "updatedTime": "2024-06-25T10:56:37.978214",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "productId": "d281d3c1-38fa-4560-ae2c-c8c94ecb7054",
+        "quantity": 7
+      },
+      {
+        "id": "dd41ae40-0bd8-41d1-886c-2e6a98f8c675",
+        "createdTime": "2024-06-25T10:56:37.982043",
+        "updatedTime": "2024-06-25T10:56:37.982045",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "productId": "40fb400e-863a-4ce4-b24d-74a0c68d8b83",
+        "quantity": 8
+      },
+      {
+        "id": "1b3d570b-8e6a-4b96-bce3-0ddaebe57c36",
+        "createdTime": "2024-06-25T10:56:37.977558",
+        "updatedTime": "2024-06-25T10:56:37.97756",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "productId": "6d51abfc-45a7-4414-846a-46a00bf3f6d6",
+        "quantity": 9
+      },
+      {
+        "id": "8b0b88e2-115a-4d31-8f49-9b8ddf88244e",
+        "createdTime": "2024-06-25T10:56:37.97617",
+        "updatedTime": "2024-06-25T10:56:37.976172",
+        "supplierReadDto": {
+          "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+          "createdTime": "2024-06-25T10:56:37.808039",
+          "updatedTime": "2024-06-25T10:56:37.808042",
+          "name": "Kihn LLC",
+          "contactPerson": "Taneka Morar",
+          "contactEmail": "hobert.daniel@yahoo.com",
+          "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+        },
+        "productId": "2e600d74-99a8-4d0e-a9e9-44572f206a9e",
+        "quantity": 12
+      }
+    ]
+  },
+  "errors": null
 }
 ```
 
@@ -70,7 +135,8 @@
 **Request example:**
 
 ```
-/stocks/a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78
+GET /api/v1/stocks/0523e1f4-899a-4a3b-9327-01dade4f144b
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -79,16 +145,35 @@
 
 ```
 {
-    "id": "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78",
-    "product_id": "123e4567-e89b-12d3-a456-426614174000",
-    "supplier_id": "9abcd123-4ef5-6789-gh12-34ijkl56mn78",
-    "barcode": "1234567890123",
-    "product_name": "Widget A",
-    "quantity": 100,
-    "created_date": "2024-06-10",
-    "updatedd_date": "2024-06-17"
+  "id": "0523e1f4-899a-4a3b-9327-01dade4f144b",
+  "createdTime": "2024-06-25T10:56:37.972561",
+  "updatedTime": "2024-06-25T10:56:37.972568",
+  "supplierReadDto": {
+    "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+    "createdTime": "2024-06-25T10:56:37.808039",
+    "updatedTime": "2024-06-25T10:56:37.808042",
+    "name": "Kihn LLC",
+    "contactPerson": "Taneka Morar",
+    "contactEmail": "hobert.daniel@yahoo.com",
+    "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+  },
+  "productId": "d3af1b4b-730e-40a9-b70a-27c10177c897",
+  "quantity": 1
 }
 
+```
+
+404 - Not found
+```
+{
+  "data": null,
+  "errors": [
+    {
+      "field": "resource",
+      "message": "Stock not found with id f3454060-9376-467b-a812-548ce094cc3d"
+    }
+  ]
+}
 ```
 
 ### POST `/stocks`
@@ -96,13 +181,15 @@
 **Request example:**
 
 ```
+POST /api/v1/stocks
+Content-Type: application/json
+API_KEY: marmotte
+
 body
 {
-    "product_id": "123e4567-e89b-12d3-a456-426614174002",
-    "supplier_id": "7abcd123-4ef5-6789-gh12-34ijkl56mn90",
-    "barcode": "3456789012345",
-    "product_name": "Widget C",
-    "quantity": 150,
+    "supplierId": "824a8bd2-6c9c-4491-8304-8a768865c1fc",
+    "productId": "000a8bd2-6c9c-4491-8304-8a768865c007",
+    "quantity": 100
 }
 ```
 
@@ -116,15 +203,15 @@ body
 **Request example:**
 
 ```
-/stocks/c3d4e5f6-7890-ab12-cd34-ef56gh789012
 
-body:
+PUT /api/v1/stocks/0523e1f4-899a-4a3b-9327-01dade4f144b
+Content-Type: application/json
+API_KEY: marmotte
+
 {
-    "product_id": "123e4567-e89b-12d3-a456-426614174002",
-    "supplier_id": "7abcd123-4ef5-6789-gh12-34ijkl56mn90",
-    "barcode": "3456789012345",
-    "product_name": "Widget C",
-    "quantity": 150,
+    "supplierId": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+    "productId": "d3af1b4b-730e-40a9-b70a-27c10177c897",
+    "quantity": 40
 }
 ```
 
@@ -134,15 +221,22 @@ body:
 
 ```
 body:
+
 {
-    "id": "c3d4e5f6-7890-ab12-cd34-ef56gh789012",
-    "product_id": "123e4567-e89b-12d3-a456-426614174002",
-    "supplier_id": "7abcd123-4ef5-6789-gh12-34ijkl56mn90",
-    "barcode": "3456789012345",
-    "product_name": "Widget C",
-    "quantity": 150,
-    "created_date": "2024-06-10",
-	"updatedd_date": "2024-06-17"
+  "id": "0523e1f4-899a-4a3b-9327-01dade4f144b",
+  "createdTime": "2024-06-25T10:56:37.972561",
+  "updatedTime": "2024-06-25T11:49:12.041757",
+  "supplierReadDto": {
+    "id": "1cb3c1b6-93c7-4364-baec-f321d53cf708",
+    "createdTime": "2024-06-25T10:56:37.808039",
+    "updatedTime": "2024-06-25T10:56:37.808042",
+    "name": "Kihn LLC",
+    "contactPerson": "Taneka Morar",
+    "contactEmail": "hobert.daniel@yahoo.com",
+    "address": "Suite 596 5114 Stracke Rest, Rogahnmouth, TN 07259-1984"
+  },
+  "productId": "d3af1b4b-730e-40a9-b70a-27c10177c897",
+  "quantity": 40
 }
 ```
 
@@ -155,7 +249,7 @@ body:
 **Request example:**
 
 ```
-/stocks/c3d4e5f6-7890-ab12-cd34-ef56gh789012
+DELETE /api/v1/stocks/0523e1f4-899a-4a3b-9327-01dade4f144b
 ```
 
 **Response**
