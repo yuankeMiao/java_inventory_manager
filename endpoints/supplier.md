@@ -25,7 +25,8 @@
 **Request example:**
 
 ```
-/suppliers?page=2&limit=8&sortby=ASC
+GET /api/v1/suppliers?orderBy=DESC&sortBy=CREATED_TIME
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -34,35 +35,45 @@
 
 ```
 {
-  data: [
-  	  		{
-    			"id": "123e4567-e89b-12d3-a456-426614174000",
-    	    	"name": "Acme Corporation",
-    	    	"contact_person": "John Doe",
-    	    	"contact_email": "johndoe@acme.com",
-    			"address": "123 Acme St, Springfield, IL, 62704"
-  			},
-  			{
-    			"id": "123e4567-e89b-12d3-a456-426614174001",
-    			"name": "Globex Corporation",
-    			"contact_person": "Jane Smith",
-    			"contact_email": "janesmith@globex.com",
-    			"address": "456 Globex Blvd, Shelbyville, IL, 62565"
-  			},
-			...
-		]
-  total: 19
+  "data": {
+    "totalRecords": 20,
+    "page": 1,
+    "limit": 10,
+    "records": [
+      {
+        "id": "e4e5b03a-2779-4071-a799-b210fa9c1834",
+        "createdTime": "2024-06-25T10:56:37.808755",
+        "updatedTime": "2024-06-25T10:56:37.808759",
+        "name": "Wilkinson-Runte",
+        "contactPerson": "Mickey Schuppe",
+        "contactEmail": "pinkie.padberg@yahoo.com",
+        "address": "Apt. 923 22119 Hauck Fort, Kirbyhaven, GA 85957-8556"
+      },
+      {
+        "id": "f5b45035-b8af-4922-ae7e-187222f788c7",
+        "createdTime": "2024-06-25T10:56:37.808707",
+        "updatedTime": "2024-06-25T10:56:37.808709",
+        "name": "Jakubowski-Murphy",
+        "contactPerson": "Karin Lind",
+        "contactEmail": "kristopher.klein@gmail.com",
+        "address": "Apt. 322 46473 Thelma Shoal, New Margueritaville, PA 89163-2477"
+      },
+      ... 
+    ]
+  },
+  "errors": null
 }
 ```
 
 404 - Not found
 
-### GET /suppliers/
+### GET /suppliers/{supplierId}
 
 **Request example:**
 
 ```
-/suppliers/123e4567-e89b-12d3-a456-426614174000
+GET /api/v1/suppliers/123e4567-e89b-12d3-a456-426614174000
+API_KEY: marmotte
 ```
 
 **Response:**
@@ -71,11 +82,13 @@
 
 ```
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "Acme Corporation",
-    "contact_person": "John Doe",
-    "contact_email": "johndoe@acme.com",
-    "address": "123 Acme St, Springfield, IL, 62704"
+  "id": "69e1d40d-3376-4c4d-b6f2-ab887d997b19",
+  "createdTime": "2024-06-25T10:56:37.808525",
+  "updatedTime": "2024-06-25T10:56:37.80853",
+  "name": "Mertz-Zieme",
+  "contactPerson": "Maxwell Leuschke",
+  "contactEmail": "felicitas.goyette@gmail.com",
+  "address": "Suite 478 5438 Garret Terrace, New Irvin, LA 85950-2648"
 }
 
 ```
@@ -85,6 +98,8 @@
 **Request example:**
 
 ```
+POST /api/v1suppliers
+
 body
 {
     "name": "Stark Industries",
@@ -104,7 +119,7 @@ body
 **Request example:**
 
 ```
-/suppliers/123e4567-e89b-12d3-a456-426614174000
+PUT /api/v1/suppliers/123e4567-e89b-12d3-a456-426614174000
 
 body:
 {
@@ -139,7 +154,7 @@ body:
 **Request example:**
 
 ```
-/stocks/c3d4e5f6-7890-ab12-cd34-ef56gh789012
+DELETE /api/v1/suppliers/123e4567-e89b-12d3-a456-426614174000
 ```
 
 **Response**
