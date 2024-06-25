@@ -1,6 +1,7 @@
 # Endpoints Overview
 
 ## All endpoints
+URL: {domain}/api/v1/
 
 ### [Suppliers](supplier.md)
 
@@ -56,3 +57,29 @@
 
 - 204 No Content (successful)
 - 404 Not Found (cannot find the item to delete)
+
+## Reponse body
+- Get a list of data with pagination
+  ```
+  {
+    "data": {
+            totalRecords: 50,
+            page: 2,
+            limit: 10,
+            records: [.. actual data]
+          },
+    "errors": null
+  }
+  ```
+- Error
+  ```
+  {
+  "data": null,
+  "errors": [
+    {
+      "field": "orderId",
+      "message": "Invalid value: c6fc081f-2fc7-4d5d-84"
+    }
+  ]
+}
+  ```
