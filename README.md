@@ -1,37 +1,69 @@
-## Inventory Management System Micro-service
+# Inventory Management System Micro-service
 
-This assignment involves building a Spring Boot application for a inventory management.
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.0-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.2-blue)
+![pgAdmin4](https://img.shields.io/badge/pgAdmin4-8.4-blue)
+![Maven](https://img.shields.io/badge/Maven-3.9.7-red)
+![MapStruct](https://img.shields.io/badge/MapStruct-1.5.5.Final-ff69b4)
 
-**Entity Mapping:**
-- Implement JPA entities for each element in the ERD (Supplier, Stock, Order, OrderItem).
-- Define appropriate relationships between entities using annotations (e.g., OneToMany, ManyToOne).
+## Overview
+This project is a Java-based microserver designed as part of Integrify Full-stack program to demonstrate understanding of microservices architecture and RESTful APIs. It aims to provide a simple and robust  solution for managing the inventory of an e-commerce.
 
-**Inventory Management API:**
-- Implement CRUD operations for all entities.
-- Stock management:
-    - Create new stock entries linked to a specific supplier and product identifier.
-    - Update stock information (quantity, supplier, product identifier).
-    - Retrieve a list of all stock entries, or a specific stock entry by ID.
-    - Filter stock entries by supplier or product identifier.
-    - Consider functionalities for low stock alerts based on predefined thresholds.
-- Order management:
-    - Create new orders with a list of ordered products and quantities.
-    - Implement logic to check stock availability before order confirmation.
-    - Retrieve a list of all orders, or a specific order by ID.
-    - Update order status (e.g., processing, shipped, delivered).
-    - Manage order cancellations.
+## Features
+- Clean architecture
+- RestFul API design
+- API-Key based authentication
+- Production-Ready
+- Email notifications
 
-**Security:**
-- Implement security measures with Spring Security to restrict unauthorised access to API endpoints. Consider using JWT or API Key based authentication for improved security.
+## Getting Started
+**Prerequisites**
+- Java 17 or higher
+- Maven 3.9 or higher
+- PostgreSql 16 or higher
 
-**Production-Ready Considerations:**
-- Implement error handling and validation for API requests.
-- Consider logging and monitoring functionalities for production environments.
+**Installation**
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yuankeMiao/fs17_java_inventory_service.git
+    ```
+2. Navigate to the project `application.property`:
+    ```bash
+    cd inventory-manager/src/main/resources
+    ```
+3. Add database info, api_key, and mail host info. If you want to populate mock data, changed the value of `data.load` to `true`, after the first poppulate, changed it to `false` again.
+    ```
+    spring.application.name=inventory-manager
+    spring.datasource.url=your database url
+    spring.datasource.username=your database user name
+    spring.datasource.password=your database password
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    spring.jpa.show-sql=true
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.properties.hibernate.format_sql=true
+    logging.level.org.hibernate.SQL=DEBUG
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
-**Additional Functionalities:**
-- **Low Stock Alerts:**
-    - Implement logic to track stock levels and trigger notifications (e.g., email, SMS) when stock falls below a predefined threshold.
-- **Order Status Update:**
-    - When an order status is updated to "Shipped" within your system, trigger a notification process.
-- **Inventory Reports:**
-    - Develop functionalities to generate reports on inventory levels, sales trends, low-performing products, order fulfillment times, and purchase history.
+    SECRET_API_KEY=your secret key
+
+    spring.mail.host=your eamil host
+    spring.mail.port=587
+    spring.mail.username=your email address
+    spring.mail.password=your email password
+    spring.mail.properties.mail.smtp.auth=true
+    spring.mail.properties.mail.smtp.starttls.enable=true
+
+    data.load=false
+    ```
+    
+3. Build the project using Maven and then you are ready to run it:
+    ```bash
+    mvn clean install
+    ```
+
+## Inventory Management API
+You can find details of endpoint design [here](
+### 
+
+
